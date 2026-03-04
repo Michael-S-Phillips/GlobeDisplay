@@ -93,10 +93,8 @@ final class ContentManager {
             throw ContentManagerError.imageNotFound("(no image name in assets)")
         }
 
-        let url = Bundle.main.url(forResource: imageName, withExtension: "jpg",
-                                   subdirectory: "BundledContent")
-               ?? Bundle.main.url(forResource: imageName, withExtension: "png",
-                                   subdirectory: "BundledContent")
+        let url = Bundle.main.url(forResource: imageName, withExtension: "jpg")
+               ?? Bundle.main.url(forResource: imageName, withExtension: "png")
 
         guard let url else {
             throw ContentManagerError.imageNotFound(imageName)

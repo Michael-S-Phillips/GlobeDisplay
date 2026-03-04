@@ -52,10 +52,8 @@ struct ContentCard: View {
     private func loadBundledImage() -> UIImage? {
         guard let name = bundle.assets.primaryImageName else { return nil }
         if let ui = UIImage(named: name) { return ui }
-        guard let url = Bundle.main.url(forResource: name, withExtension: "jpg",
-                                         subdirectory: "BundledContent")
-               ?? Bundle.main.url(forResource: name, withExtension: "png",
-                                   subdirectory: "BundledContent"),
+        guard let url = Bundle.main.url(forResource: name, withExtension: "jpg")
+               ?? Bundle.main.url(forResource: name, withExtension: "png"),
               let data = try? Data(contentsOf: url) else { return nil }
         return UIImage(data: data)
     }

@@ -97,12 +97,16 @@ extension RenderEngine: MTKViewDelegate {
             let pipelineState,
             let drawable = view.currentDrawable,
             let renderPassDescriptor = view.currentRenderPassDescriptor,
-            let commandBuffer = commandQueue.makeCommandBuffer(),
-            let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
+            let commandBuffer = commandQueue.makeCommandBuffer()
         else { return }
 
+        // Configure the descriptor before creating the encoder — mutations after
+        // makeRenderCommandEncoder(descriptor:) are silently ignored by Metal.
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
+
+        guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
+        else { return }
 
         encoder.setRenderPipelineState(pipelineState)
 

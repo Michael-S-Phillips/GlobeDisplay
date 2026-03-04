@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Status
 
-This is a **greenfield project** — the Xcode project has not been created yet. Development follows the phases in §6. When starting, create the Xcode project at `GlobeDisplay/GlobeDisplay.xcodeproj` with a SwiftUI lifecycle targeting iPadOS 16.0+.
+Phase 1 is complete — the Xcode project exists at `GlobeDisplay.xcodeproj`. The app renders static equirectangular textures to the MagicPlanet globe via HDMI with a real-time rotation control. Phase 2 (animated datasets, content downloading, SOS import) is next.
+
+**Deployment target: iPadOS 17.0+** — raised from 16.0 during Phase 1 to enable `@Observable` (Observation framework). All hardware targets support iOS 17.
 
 ## Build & Test Commands
 

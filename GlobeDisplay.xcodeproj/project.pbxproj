@@ -1,0 +1,517 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		1A325E09279E16013ED728DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8356DABF75542E14C89D571C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C708ED5EF88B805A49324A65;
+			remoteInfo = GlobeDisplay;
+		};
+		64DAAAF6B710FDAF050282D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8356DABF75542E14C89D571C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C708ED5EF88B805A49324A65;
+			remoteInfo = GlobeDisplay;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1C6F050956D728A04C4AFC29 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		2957F0ED262A745F55071427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4B64CD5E5CD3747F8DA45CC5 /* GlobeDisplayUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlobeDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98602C04B6A4EA02CCB0E549 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		9A88F6563220EC85315ACE89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		32BBFCA333E8767923653560 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		65EAE44F5BFB21E2F0BF3D61 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B450C0E91BBD472537EE3D1A /* BundledContent */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		6A92A10849F713963CC72538 /* TestFixtures */ = {
+			isa = PBXGroup;
+			children = (
+				98602C04B6A4EA02CCB0E549 /* .gitkeep */,
+			);
+			path = TestFixtures;
+			sourceTree = "<group>";
+		};
+		865ADA5C9E5DC2710456A1B2 = {
+			isa = PBXGroup;
+			children = (
+				CD6A89411A607FFB724F934C /* GlobeDisplay */,
+				FECE927174F5556C89B030B2 /* GlobeDisplayTests */,
+				BA209216F412889E595339E1 /* GlobeDisplayUITests */,
+				AF9B25A1A8DF314B771FB6B8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AF9B25A1A8DF314B771FB6B8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */,
+				6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */,
+				4B64CD5E5CD3747F8DA45CC5 /* GlobeDisplayUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B450C0E91BBD472537EE3D1A /* BundledContent */ = {
+			isa = PBXGroup;
+			children = (
+				1C6F050956D728A04C4AFC29 /* .gitkeep */,
+			);
+			path = BundledContent;
+			sourceTree = "<group>";
+		};
+		BA209216F412889E595339E1 /* GlobeDisplayUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9A88F6563220EC85315ACE89 /* .gitkeep */,
+			);
+			path = GlobeDisplayUITests;
+			sourceTree = "<group>";
+		};
+		CD6A89411A607FFB724F934C /* GlobeDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				65EAE44F5BFB21E2F0BF3D61 /* Resources */,
+				32BBFCA333E8767923653560 /* UI */,
+				2957F0ED262A745F55071427 /* Info.plist */,
+			);
+			path = GlobeDisplay;
+			sourceTree = "<group>";
+		};
+		FECE927174F5556C89B030B2 /* GlobeDisplayTests */ = {
+			isa = PBXGroup;
+			children = (
+				6A92A10849F713963CC72538 /* TestFixtures */,
+			);
+			path = GlobeDisplayTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5D88B387368787F8E5939252 /* GlobeDisplayUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B68D8A39340F1C07D90D5FA0 /* Build configuration list for PBXNativeTarget "GlobeDisplayUITests" */;
+			buildPhases = (
+				E5A2B44F5B79A52EC66C5CD1 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B9E6965EA67C0BAC7FE0C819 /* PBXTargetDependency */,
+			);
+			name = GlobeDisplayUITests;
+			packageProductDependencies = (
+			);
+			productName = GlobeDisplayUITests;
+			productReference = 4B64CD5E5CD3747F8DA45CC5 /* GlobeDisplayUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		C708ED5EF88B805A49324A65 /* GlobeDisplay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16C9349EF59A1C42D9816683 /* Build configuration list for PBXNativeTarget "GlobeDisplay" */;
+			buildPhases = (
+				71223B6FE0A2188510ADD3AD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlobeDisplay;
+			packageProductDependencies = (
+			);
+			productName = GlobeDisplay;
+			productReference = 788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E2CB7233E64F157DD8D4BBF6 /* GlobeDisplayTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2C007B0781A490C6EFBF717 /* Build configuration list for PBXNativeTarget "GlobeDisplayTests" */;
+			buildPhases = (
+				3E80551EF76ED2AFEC8176A9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED7068FAC2B6E6041B22E194 /* PBXTargetDependency */,
+			);
+			name = GlobeDisplayTests;
+			packageProductDependencies = (
+			);
+			productName = GlobeDisplayTests;
+			productReference = 6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8356DABF75542E14C89D571C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					5D88B387368787F8E5939252 = {
+						TestTargetID = C708ED5EF88B805A49324A65;
+					};
+					C708ED5EF88B805A49324A65 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F7C83D19D61C2E0CA0007434 /* Build configuration list for PBXProject "GlobeDisplay" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 865ADA5C9E5DC2710456A1B2;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C708ED5EF88B805A49324A65 /* GlobeDisplay */,
+				E2CB7233E64F157DD8D4BBF6 /* GlobeDisplayTests */,
+				5D88B387368787F8E5939252 /* GlobeDisplayUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E80551EF76ED2AFEC8176A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71223B6FE0A2188510ADD3AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A2B44F5B79A52EC66C5CD1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B9E6965EA67C0BAC7FE0C819 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C708ED5EF88B805A49324A65 /* GlobeDisplay */;
+			targetProxy = 64DAAAF6B710FDAF050282D6 /* PBXContainerItemProxy */;
+		};
+		ED7068FAC2B6E6041B22E194 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C708ED5EF88B805A49324A65 /* GlobeDisplay */;
+			targetProxy = 1A325E09279E16013ED728DC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		12CEA240846AF6E7EBF7BAF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlobeDisplay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlobeDisplay";
+			};
+			name = Release;
+		};
+		182511402587D2933BDC1B8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		2A5F2387E6CDC98E732894AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		701105C78AC39B4EE23DB8B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = GlobeDisplay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9A7B015D5AF4DBE1AB1C26CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GlobeDisplay;
+			};
+			name = Release;
+		};
+		A01D620FF7D4F8D119057A54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = GlobeDisplay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A78EF1ED224BC99B7011019D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GlobeDisplay;
+			};
+			name = Debug;
+		};
+		C9EBCD45196AE2B873113411 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlobeDisplay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlobeDisplay";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		16C9349EF59A1C42D9816683 /* Build configuration list for PBXNativeTarget "GlobeDisplay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A01D620FF7D4F8D119057A54 /* Debug */,
+				701105C78AC39B4EE23DB8B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B68D8A39340F1C07D90D5FA0 /* Build configuration list for PBXNativeTarget "GlobeDisplayUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A78EF1ED224BC99B7011019D /* Debug */,
+				9A7B015D5AF4DBE1AB1C26CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E2C007B0781A490C6EFBF717 /* Build configuration list for PBXNativeTarget "GlobeDisplayTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9EBCD45196AE2B873113411 /* Debug */,
+				12CEA240846AF6E7EBF7BAF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F7C83D19D61C2E0CA0007434 /* Build configuration list for PBXProject "GlobeDisplay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A5F2387E6CDC98E732894AF /* Debug */,
+				182511402587D2933BDC1B8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8356DABF75542E14C89D571C /* Project object */;
+}

@@ -1,0 +1,72 @@
+name: GlobeDisplay
+options:
+  bundleIdPrefix: com.globedisplay
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "26.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    TARGETED_DEVICE_FAMILY: "2"
+    SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+
+targets:
+  GlobeDisplay:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: GlobeDisplay
+        excludes:
+          - "**/*.md"
+    info:
+      path: GlobeDisplay/Info.plist
+      properties:
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations: {}
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+        UIRequiredDeviceCapabilities:
+          - metal
+        UIApplicationSupportsIndirectInputEvents: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.globedisplay.app
+        CODE_SIGN_STYLE: Automatic
+
+  GlobeDisplayTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: GlobeDisplayTests
+    dependencies:
+      - target: GlobeDisplay
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.globedisplay.tests
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/GlobeDisplay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlobeDisplay"
+
+  GlobeDisplayUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: GlobeDisplayUITests
+    dependencies:
+      - target: GlobeDisplay
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.globedisplay.uitests
+        TEST_TARGET_NAME: GlobeDisplay

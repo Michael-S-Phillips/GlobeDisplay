@@ -33,16 +33,22 @@ final class RenderEngine: NSObject {
 
     // MARK: - Init
 
-    init() throws {
+    /// Private designated init satisfies NSObject's non-throwing init() requirement.
+    private init(device: MTLDevice, commandQueue: MTLCommandQueue) {
+        self.device = device
+        self.commandQueue = commandQueue
+        super.init()
+    }
+
+    /// Public throwing convenience init used by callers (e.g. `try? RenderEngine()`).
+    convenience init() throws {
         guard let device = MTLCreateSystemDefaultDevice() else {
             throw RenderEngineError.metalDeviceUnavailable
         }
         guard let commandQueue = device.makeCommandQueue() else {
             throw RenderEngineError.commandQueueFailed
         }
-        self.device = device
-        self.commandQueue = commandQueue
-        super.init()
+        self.init(device: device, commandQueue: commandQueue)
         try buildPipeline()
     }
 

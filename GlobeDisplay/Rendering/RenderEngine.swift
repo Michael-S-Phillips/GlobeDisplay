@@ -40,16 +40,19 @@ final class RenderEngine: NSObject {
         super.init()
     }
 
-    /// Public throwing convenience init used by callers (e.g. `try? RenderEngine()`).
-    convenience init() throws {
+    /// Public throwing factory method used by callers (e.g. `try? RenderEngine.make()`).
+    /// A static factory is required because Swift does not allow overriding NSObject's
+    /// non-throwing `init()` with a throwing initializer.
+    static func make() throws -> RenderEngine {
         guard let device = MTLCreateSystemDefaultDevice() else {
             throw RenderEngineError.metalDeviceUnavailable
         }
         guard let commandQueue = device.makeCommandQueue() else {
             throw RenderEngineError.commandQueueFailed
         }
-        self.init(device: device, commandQueue: commandQueue)
-        try buildPipeline()
+        let engine = RenderEngine(device: device, commandQueue: commandQueue)
+        try engine.buildPipeline()
+        return engine
     }
 
     private func buildPipeline() throws {

@@ -5,7 +5,7 @@ struct GlobeDisplayApp: App {
 
     @State private var appState = AppState()
     @State private var renderEngine: RenderEngine? = {
-        try? RenderEngine()
+        try? RenderEngine.make()
     }()
     @State private var displayManager: ExternalDisplayManager?
 

@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		532DF8DECC7F756FE8050846 /* MapProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FE55E475607DDBAF387C24 /* MapProjection.swift */; };
+		574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1A325E09279E16013ED728DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -28,9 +33,11 @@
 		2957F0ED262A745F55071427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4B64CD5E5CD3747F8DA45CC5 /* GlobeDisplayUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjectionTests.swift; sourceTree = "<group>"; };
 		788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlobeDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98602C04B6A4EA02CCB0E549 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		9A88F6563220EC85315ACE89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		D1FE55E475607DDBAF387C24 /* MapProjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -85,6 +92,14 @@
 			path = BundledContent;
 			sourceTree = "<group>";
 		};
+		B6D9C1DA2A7D471F7A58D16C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D1FE55E475607DDBAF387C24 /* MapProjection.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		BA209216F412889E595339E1 /* GlobeDisplayUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +113,7 @@
 			children = (
 				65EAE44F5BFB21E2F0BF3D61 /* Resources */,
 				32BBFCA333E8767923653560 /* UI */,
+				B6D9C1DA2A7D471F7A58D16C /* Utilities */,
 				2957F0ED262A745F55071427 /* Info.plist */,
 			);
 			path = GlobeDisplay;
@@ -107,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				6A92A10849F713963CC72538 /* TestFixtures */,
+				74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */,
 			);
 			path = GlobeDisplayTests;
 			sourceTree = "<group>";
@@ -210,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				532DF8DECC7F756FE8050846 /* MapProjection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

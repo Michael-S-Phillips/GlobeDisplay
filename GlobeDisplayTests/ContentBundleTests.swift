@@ -11,7 +11,7 @@ final class ContentBundleTests: XCTestCase {
             title: "Earth — Blue Marble",
             category: .planets,
             contentType: .staticImage,
-            resolution: CGSize(width: 2048, height: 1024),
+            resolution: CodableSize(width: 2048, height: 1024),
             source: .bundled,
             assets: ContentAssets(primaryImageName: "blue_marble"),
             attribution: "NASA Visible Earth",

@@ -6,7 +6,7 @@ struct ContentBundle: Identifiable, Codable, Sendable {
     let title: String
     let category: ContentCategory
     let contentType: ContentType
-    let resolution: CGSize
+    let resolution: CodableSize
     let source: ContentSource
     let assets: ContentAssets
     let attribution: String
@@ -40,19 +40,22 @@ struct ContentAssets: Codable, Sendable {
     }
 }
 
-// CGSize does not conform to Codable in the standard library.
-// This retroactive conformance encodes as a two-element array [width, height].
-extension CGSize: @retroactive Codable {
-    public init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
-        let width = try container.decode(Double.self)
-        let height = try container.decode(Double.self)
-        self.init(width: width, height: height)
+/// A Codable wrapper for CGSize, used to persist content resolution.
+/// Avoids a retroactive conformance on CGSize that could conflict with
+/// future SDK additions.
+struct CodableSize: Codable, Sendable {
+    var width: Double
+    var height: Double
+
+    var cgSize: CGSize { CGSize(width: width, height: height) }
+
+    init(_ size: CGSize) {
+        self.width = size.width
+        self.height = size.height
     }
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.unkeyedContainer()
-        try container.encode(Double(width))
-        try container.encode(Double(height))
+    init(width: Double, height: Double) {
+        self.width = width
+        self.height = height
     }
 }

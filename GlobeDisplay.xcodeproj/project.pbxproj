@@ -7,8 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01B3A6A8E5B947CD6BF0F0A3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E188446FBB732CE9D1C15A /* AppState.swift */; };
+		037DA22F5F8A651A6EECAE37 /* EquirectangularShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = E16F950B088229A9D177BA41 /* EquirectangularShaders.metal */; };
+		2329B29F3997D4CBCB9D8AC1 /* ContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */; };
 		532DF8DECC7F756FE8050846 /* MapProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FE55E475607DDBAF387C24 /* MapProjection.swift */; };
 		574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */; };
+		5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */; };
+		61FFB73F2AE5FD9A7707375B /* ContentBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C91CE843C006280F02E94 /* ContentBundle.swift */; };
+		7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7517B787A111441E6FD34CF /* GlobeOutputView.swift */; };
+		834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */; };
+		9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */; };
+		A87DBBDC3F0F5AC9440CBAA8 /* ExternalDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */; };
+		D85241658422813F4BA786CF /* RenderEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13A50F6646B3F4B8813D88F /* RenderEngine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,23 +39,58 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15E188446FBB732CE9D1C15A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		1C6F050956D728A04C4AFC29 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		2957F0ED262A745F55071427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCalibration.swift; sourceTree = "<group>"; };
 		4B64CD5E5CD3747F8DA45CC5 /* GlobeDisplayUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjectionTests.swift; sourceTree = "<group>"; };
 		788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlobeDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98602C04B6A4EA02CCB0E549 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		9A88F6563220EC85315ACE89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		A13A50F6646B3F4B8813D88F /* RenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEngine.swift; sourceTree = "<group>"; };
+		A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplayManager.swift; sourceTree = "<group>"; };
+		C7517B787A111441E6FD34CF /* GlobeOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeOutputView.swift; sourceTree = "<group>"; };
 		D1FE55E475607DDBAF387C24 /* MapProjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjection.swift; sourceTree = "<group>"; };
+		DA5C91CE843C006280F02E94 /* ContentBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBundle.swift; sourceTree = "<group>"; };
+		DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentManager.swift; sourceTree = "<group>"; };
+		E16F950B088229A9D177BA41 /* EquirectangularShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EquirectangularShaders.metal; sourceTree = "<group>"; };
+		E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetaryBody.swift; sourceTree = "<group>"; };
+		FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBundleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		238CA441C64A9593CA136D67 /* ContentManagement */ = {
+			isa = PBXGroup;
+			children = (
+				DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */,
+			);
+			path = ContentManagement;
+			sourceTree = "<group>";
+		};
 		32BBFCA333E8767923653560 /* UI */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		5920A7079F1578D2DCD9FC51 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				15E188446FBB732CE9D1C15A /* AppState.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		60FE1856ECDCCD65759D254F /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				E16F950B088229A9D177BA41 /* EquirectangularShaders.metal */,
+				A13A50F6646B3F4B8813D88F /* RenderEngine.swift */,
+			);
+			path = Rendering;
 			sourceTree = "<group>";
 		};
 		65EAE44F5BFB21E2F0BF3D61 /* Resources */ = {
@@ -62,6 +107,25 @@
 				98602C04B6A4EA02CCB0E549 /* .gitkeep */,
 			);
 			path = TestFixtures;
+			sourceTree = "<group>";
+		};
+		717C7766523FC009C349FC36 /* ExternalDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */,
+				A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */,
+				C7517B787A111441E6FD34CF /* GlobeOutputView.swift */,
+			);
+			path = ExternalDisplay;
+			sourceTree = "<group>";
+		};
+		78BC0361A4450627AA2F64B6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DA5C91CE843C006280F02E94 /* ContentBundle.swift */,
+				E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		865ADA5C9E5DC2710456A1B2 = {
@@ -111,6 +175,11 @@
 		CD6A89411A607FFB724F934C /* GlobeDisplay */ = {
 			isa = PBXGroup;
 			children = (
+				5920A7079F1578D2DCD9FC51 /* App */,
+				238CA441C64A9593CA136D67 /* ContentManagement */,
+				717C7766523FC009C349FC36 /* ExternalDisplay */,
+				78BC0361A4450627AA2F64B6 /* Models */,
+				60FE1856ECDCCD65759D254F /* Rendering */,
 				65EAE44F5BFB21E2F0BF3D61 /* Resources */,
 				32BBFCA333E8767923653560 /* UI */,
 				B6D9C1DA2A7D471F7A58D16C /* Utilities */,
@@ -123,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				6A92A10849F713963CC72538 /* TestFixtures */,
+				FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */,
 				74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */,
 			);
 			path = GlobeDisplayTests;
@@ -227,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */,
 				574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,7 +306,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01B3A6A8E5B947CD6BF0F0A3 /* AppState.swift in Sources */,
+				61FFB73F2AE5FD9A7707375B /* ContentBundle.swift in Sources */,
+				2329B29F3997D4CBCB9D8AC1 /* ContentManager.swift in Sources */,
+				834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */,
+				037DA22F5F8A651A6EECAE37 /* EquirectangularShaders.metal in Sources */,
+				A87DBBDC3F0F5AC9440CBAA8 /* ExternalDisplayManager.swift in Sources */,
+				7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */,
 				532DF8DECC7F756FE8050846 /* MapProjection.swift in Sources */,
+				9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */,
+				D85241658422813F4BA786CF /* RenderEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -389,7 +469,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -411,7 +491,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GlobeDisplay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -426,7 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -446,7 +526,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GlobeDisplay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -461,7 +541,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,7 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

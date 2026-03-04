@@ -29,11 +29,11 @@ enum ContentSource: String, Codable, Sendable {
 }
 
 struct ContentAssets: Codable, Sendable {
-    var primaryImageName: String?
-    var sequenceDirectory: String?
-    var videoPath: String?
-    var frameCount: Int?
-    var framerate: Double?
+    var primaryImageName: String? = nil
+    var sequenceDirectory: String? = nil
+    var videoPath: String? = nil
+    var frameCount: Int? = nil
+    var framerate: Double? = nil
 
     init(primaryImageName: String? = nil) {
         self.primaryImageName = primaryImageName

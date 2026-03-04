@@ -174,7 +174,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					5D88B387368787F8E5939252 = {
 						TestTargetID = C708ED5EF88B805A49324A65;
@@ -399,7 +399,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.app;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -434,7 +434,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.globedisplay.app;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};

@@ -3,7 +3,7 @@ options:
   bundleIdPrefix: com.globedisplay
   deploymentTarget:
     iOS: "16.0"
-  xcodeVersion: "26.0"
+  xcodeVersion: "26.3"
   createIntermediateGroups: true
   groupSortPosition: top
 
@@ -29,7 +29,7 @@ targets:
       properties:
         UILaunchScreen: {}
         UIApplicationSceneManifest:
-          UIApplicationSupportsMultipleScenes: false
+          UIApplicationSupportsMultipleScenes: true
           UISceneConfigurations: {}
         UISupportedInterfaceOrientations~ipad:
           - UIInterfaceOrientationLandscapeLeft
@@ -43,6 +43,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.globedisplay.app
         CODE_SIGN_STYLE: Automatic
+        TARGETED_DEVICE_FAMILY: "2"
 
   GlobeDisplayTests:
     type: bundle.unit-test

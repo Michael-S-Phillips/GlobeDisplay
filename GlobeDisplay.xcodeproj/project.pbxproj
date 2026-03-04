@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		01B3A6A8E5B947CD6BF0F0A3 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E188446FBB732CE9D1C15A /* AppState.swift */; };
 		037DA22F5F8A651A6EECAE37 /* EquirectangularShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = E16F950B088229A9D177BA41 /* EquirectangularShaders.metal */; };
+		0C378027CF4BE25711D9A52D /* blue_marble.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F907540F5ED70EE6B9677996 /* blue_marble.jpg */; };
 		2329B29F3997D4CBCB9D8AC1 /* ContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */; };
+		3BF2825E2F4B1C4161692DF0 /* jupiter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87FBA9D90DE9E2E325DF48D6 /* jupiter.jpg */; };
 		532DF8DECC7F756FE8050846 /* MapProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FE55E475607DDBAF387C24 /* MapProjection.swift */; };
 		574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */; };
 		5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */; };
@@ -17,8 +19,12 @@
 		7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7517B787A111441E6FD34CF /* GlobeOutputView.swift */; };
 		834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */; };
 		9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */; };
+		97DA0418D5CBD6A6FEFA44D7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C549AFF55AA149B3698993C7 /* mars.jpg */; };
+		989D4237A2054BC0C4EA649A /* moon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 669BAEF92AF27CC6003950BD /* moon.jpg */; };
 		A87DBBDC3F0F5AC9440CBAA8 /* ExternalDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */; };
+		D064405188AAE1FD34D829F9 /* earth_night.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D167D283104F49C66765C8CA /* earth_night.jpg */; };
 		D85241658422813F4BA786CF /* RenderEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13A50F6646B3F4B8813D88F /* RenderEngine.swift */; };
+		DE1A68839FDEB7672AC06105 /* test_equirectangular.png in Resources */ = {isa = PBXBuildFile; fileRef = 5725FFB69FF9C8E8DD7344F1 /* test_equirectangular.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,23 +46,27 @@
 
 /* Begin PBXFileReference section */
 		15E188446FBB732CE9D1C15A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		1C6F050956D728A04C4AFC29 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		2957F0ED262A745F55071427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCalibration.swift; sourceTree = "<group>"; };
 		4B64CD5E5CD3747F8DA45CC5 /* GlobeDisplayUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5725FFB69FF9C8E8DD7344F1 /* test_equirectangular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_equirectangular.png; sourceTree = "<group>"; };
+		669BAEF92AF27CC6003950BD /* moon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moon.jpg; sourceTree = "<group>"; };
 		6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjectionTests.swift; sourceTree = "<group>"; };
 		788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlobeDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		98602C04B6A4EA02CCB0E549 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		87FBA9D90DE9E2E325DF48D6 /* jupiter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jupiter.jpg; sourceTree = "<group>"; };
 		9A88F6563220EC85315ACE89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		A13A50F6646B3F4B8813D88F /* RenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEngine.swift; sourceTree = "<group>"; };
 		A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplayManager.swift; sourceTree = "<group>"; };
+		C549AFF55AA149B3698993C7 /* mars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mars.jpg; sourceTree = "<group>"; };
 		C7517B787A111441E6FD34CF /* GlobeOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeOutputView.swift; sourceTree = "<group>"; };
+		D167D283104F49C66765C8CA /* earth_night.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_night.jpg; sourceTree = "<group>"; };
 		D1FE55E475607DDBAF387C24 /* MapProjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjection.swift; sourceTree = "<group>"; };
 		DA5C91CE843C006280F02E94 /* ContentBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBundle.swift; sourceTree = "<group>"; };
 		DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentManager.swift; sourceTree = "<group>"; };
 		E16F950B088229A9D177BA41 /* EquirectangularShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EquirectangularShaders.metal; sourceTree = "<group>"; };
 		E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetaryBody.swift; sourceTree = "<group>"; };
+		F907540F5ED70EE6B9677996 /* blue_marble.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blue_marble.jpg; sourceTree = "<group>"; };
 		FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBundleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,7 +114,7 @@
 		6A92A10849F713963CC72538 /* TestFixtures */ = {
 			isa = PBXGroup;
 			children = (
-				98602C04B6A4EA02CCB0E549 /* .gitkeep */,
+				5725FFB69FF9C8E8DD7344F1 /* test_equirectangular.png */,
 			);
 			path = TestFixtures;
 			sourceTree = "<group>";
@@ -151,7 +161,11 @@
 		B450C0E91BBD472537EE3D1A /* BundledContent */ = {
 			isa = PBXGroup;
 			children = (
-				1C6F050956D728A04C4AFC29 /* .gitkeep */,
+				F907540F5ED70EE6B9677996 /* blue_marble.jpg */,
+				D167D283104F49C66765C8CA /* earth_night.jpg */,
+				87FBA9D90DE9E2E325DF48D6 /* jupiter.jpg */,
+				C549AFF55AA149B3698993C7 /* mars.jpg */,
+				669BAEF92AF27CC6003950BD /* moon.jpg */,
 			);
 			path = BundledContent;
 			sourceTree = "<group>";
@@ -224,6 +238,7 @@
 			buildConfigurationList = 16C9349EF59A1C42D9816683 /* Build configuration list for PBXNativeTarget "GlobeDisplay" */;
 			buildPhases = (
 				71223B6FE0A2188510ADD3AD /* Sources */,
+				AB12785CB8DA7EE9F7ED49F1 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -241,6 +256,7 @@
 			buildConfigurationList = E2C007B0781A490C6EFBF717 /* Build configuration list for PBXNativeTarget "GlobeDisplayTests" */;
 			buildPhases = (
 				3E80551EF76ED2AFEC8176A9 /* Sources */,
+				AF187A461E2F2A9246D0A731 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -291,6 +307,29 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB12785CB8DA7EE9F7ED49F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0C378027CF4BE25711D9A52D /* blue_marble.jpg in Resources */,
+				D064405188AAE1FD34D829F9 /* earth_night.jpg in Resources */,
+				3BF2825E2F4B1C4161692DF0 /* jupiter.jpg in Resources */,
+				97DA0418D5CBD6A6FEFA44D7 /* mars.jpg in Resources */,
+				989D4237A2054BC0C4EA649A /* moon.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF187A461E2F2A9246D0A731 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE1A68839FDEB7672AC06105 /* test_equirectangular.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3E80551EF76ED2AFEC8176A9 /* Sources */ = {

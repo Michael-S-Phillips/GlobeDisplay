@@ -46,8 +46,12 @@ fragment float4 equirect_fragment(
         address::repeat
     );
 
-    float2 uv = in.texCoord;
-    uv.x = uv.x + uniforms.rotationOffset;
+    // The external display scene renders in portrait orientation, which the
+    // globe's projector receives as a 90° rotated signal. Swap U and V here
+    // to pre-compensate so the equator appears E-W on the sphere.
+    // If the image is still rotated after this change, try (1-y, x) instead.
+    float2 uv = float2(in.texCoord.y, in.texCoord.x);
+    uv.x = fract(uv.x + uniforms.rotationOffset);
 
     return baseTexture.sample(textureSampler, uv);
 }

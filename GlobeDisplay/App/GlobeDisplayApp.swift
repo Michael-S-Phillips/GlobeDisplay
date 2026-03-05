@@ -7,7 +7,6 @@ struct GlobeDisplayApp: App {
     @State private var renderEngine: RenderEngine? = {
         try? RenderEngine.make()
     }()
-    @State private var displayManager: ExternalDisplayManager?
 
     var body: some Scene {
         WindowGroup {
@@ -17,12 +16,11 @@ struct GlobeDisplayApp: App {
                         .environment(appState)
                         .environment(\.renderEngine, engine)
                         .onAppear {
-                            if displayManager == nil {
-                                displayManager = ExternalDisplayManager(
-                                    renderEngine: engine,
-                                    appState: appState
-                                )
-                            }
+                            // Publish resources so ExternalDisplaySceneDelegate
+                            // can access them when the OS activates the external
+                            // display scene.
+                            SharedAppResources.renderEngine = engine
+                            SharedAppResources.appState = appState
                         }
                 } else {
                     ContentUnavailableView(

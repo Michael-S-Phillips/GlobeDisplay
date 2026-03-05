@@ -58,10 +58,22 @@ final class ExternalDisplayManager {
     private func setupExternalWindow(for screen: UIScreen) {
         tearDownExternalWindow()
 
-        let window = UIWindow(frame: screen.bounds)
-        window.screen = screen
+        // iOS 13+: create the window inside the UIWindowScene that owns this
+        // screen. The deprecated `window.screen =` setter no longer routes
+        // rendering away from the main scene on modern iPadOS.
+        let window: UIWindow
+        if let scene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first(where: { $0.screen == screen }) {
+            window = UIWindow(windowScene: scene)
+        } else {
+            // Fallback for devices where the scene isn't ready yet.
+            window = UIWindow(frame: screen.bounds)
+            window.screen = screen
+        }
 
         let globeView = GlobeOutputView(renderEngine: renderEngine)
+        globeView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         let controller = UIViewController()
         controller.view = globeView
         controller.view.backgroundColor = .black

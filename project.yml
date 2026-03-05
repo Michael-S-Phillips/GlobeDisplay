@@ -30,7 +30,10 @@ targets:
         UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: true
-          UISceneConfigurations: {}
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleExternalDisplayNonInteractive:
+              - UISceneConfigurationName: "External Display"
+                UISceneDelegateClassName: "$(PRODUCT_MODULE_NAME).ExternalDisplaySceneDelegate"
         UISupportedInterfaceOrientations~ipad:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight

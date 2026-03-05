@@ -18,17 +18,20 @@
 		574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */; };
 		5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */; };
 		61FFB73F2AE5FD9A7707375B /* ContentBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C91CE843C006280F02E94 /* ContentBundle.swift */; };
+		620F83402C837794E099559E /* SharedAppResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C8FD669A99D0F8DA1A2D50 /* SharedAppResources.swift */; };
 		6DD533F52977789CA917738D /* ContentBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DA5E06390BD51813967302 /* ContentBrowserView.swift */; };
 		7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7517B787A111441E6FD34CF /* GlobeOutputView.swift */; };
 		834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */; };
 		9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */; };
 		97DA0418D5CBD6A6FEFA44D7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C549AFF55AA149B3698993C7 /* mars.jpg */; };
 		989D4237A2054BC0C4EA649A /* moon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 669BAEF92AF27CC6003950BD /* moon.jpg */; };
+		A37E523B3B17E5A1023A6904 /* DisplayCalibrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32151FCFBF3F3A98575389D /* DisplayCalibrationTests.swift */; };
 		A87DBBDC3F0F5AC9440CBAA8 /* ExternalDisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */; };
 		D064405188AAE1FD34D829F9 /* earth_night.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D167D283104F49C66765C8CA /* earth_night.jpg */; };
 		D85241658422813F4BA786CF /* RenderEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13A50F6646B3F4B8813D88F /* RenderEngine.swift */; };
 		DE1A68839FDEB7672AC06105 /* test_equirectangular.png in Resources */ = {isa = PBXBuildFile; fileRef = 5725FFB69FF9C8E8DD7344F1 /* test_equirectangular.png */; };
 		DE3F4D2E03B967126B8F8ED1 /* ContentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C921EF1D7C9F5F990F836880 /* ContentCard.swift */; };
+		DF4E00B1B4EAA5045695E6B4 /* ExternalDisplaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F503D218BA3AD5DEBC49D9E7 /* ExternalDisplaySceneDelegate.swift */; };
 		F6AB805D1D47BA72FF5E8DF1 /* GlobeDisplayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF0F0692E77943DD5BE067E /* GlobeDisplayApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		15E188446FBB732CE9D1C15A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		26C8FD669A99D0F8DA1A2D50 /* SharedAppResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedAppResources.swift; sourceTree = "<group>"; };
 		2957F0ED262A745F55071427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E9AD62A7D66A0067485E088 /* RenderEngineKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEngineKey.swift; sourceTree = "<group>"; };
 		3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCalibration.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 		A13A50F6646B3F4B8813D88F /* RenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEngine.swift; sourceTree = "<group>"; };
 		A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplayManager.swift; sourceTree = "<group>"; };
 		AEE3B9D6EBC9033EF2BB8BE7 /* ControlPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanelView.swift; sourceTree = "<group>"; };
+		C32151FCFBF3F3A98575389D /* DisplayCalibrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCalibrationTests.swift; sourceTree = "<group>"; };
 		C549AFF55AA149B3698993C7 /* mars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mars.jpg; sourceTree = "<group>"; };
 		C7517B787A111441E6FD34CF /* GlobeOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeOutputView.swift; sourceTree = "<group>"; };
 		C921EF1D7C9F5F990F836880 /* ContentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCard.swift; sourceTree = "<group>"; };
@@ -75,6 +80,7 @@
 		DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentManager.swift; sourceTree = "<group>"; };
 		E16F950B088229A9D177BA41 /* EquirectangularShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = EquirectangularShaders.metal; sourceTree = "<group>"; };
 		E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetaryBody.swift; sourceTree = "<group>"; };
+		F503D218BA3AD5DEBC49D9E7 /* ExternalDisplaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplaySceneDelegate.swift; sourceTree = "<group>"; };
 		F907540F5ED70EE6B9677996 /* blue_marble.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blue_marble.jpg; sourceTree = "<group>"; };
 		FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBundleTests.swift; sourceTree = "<group>"; };
 		FFF0F0692E77943DD5BE067E /* GlobeDisplayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeDisplayApp.swift; sourceTree = "<group>"; };
@@ -137,7 +143,9 @@
 			children = (
 				3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */,
 				A66194989FA02E4896509C29 /* ExternalDisplayManager.swift */,
+				F503D218BA3AD5DEBC49D9E7 /* ExternalDisplaySceneDelegate.swift */,
 				C7517B787A111441E6FD34CF /* GlobeOutputView.swift */,
+				26C8FD669A99D0F8DA1A2D50 /* SharedAppResources.swift */,
 			);
 			path = ExternalDisplay;
 			sourceTree = "<group>";
@@ -238,6 +246,7 @@
 			children = (
 				6A92A10849F713963CC72538 /* TestFixtures */,
 				FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */,
+				C32151FCFBF3F3A98575389D /* DisplayCalibrationTests.swift */,
 				74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */,
 			);
 			path = GlobeDisplayTests;
@@ -368,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */,
+				A37E523B3B17E5A1023A6904 /* DisplayCalibrationTests.swift in Sources */,
 				574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,12 +395,14 @@
 				834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */,
 				037DA22F5F8A651A6EECAE37 /* EquirectangularShaders.metal in Sources */,
 				A87DBBDC3F0F5AC9440CBAA8 /* ExternalDisplayManager.swift in Sources */,
+				DF4E00B1B4EAA5045695E6B4 /* ExternalDisplaySceneDelegate.swift in Sources */,
 				F6AB805D1D47BA72FF5E8DF1 /* GlobeDisplayApp.swift in Sources */,
 				7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */,
 				532DF8DECC7F756FE8050846 /* MapProjection.swift in Sources */,
 				9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */,
 				D85241658422813F4BA786CF /* RenderEngine.swift in Sources */,
 				55E981C48D12132CBD1D6A8A /* RenderEngineKey.swift in Sources */,
+				620F83402C837794E099559E /* SharedAppResources.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

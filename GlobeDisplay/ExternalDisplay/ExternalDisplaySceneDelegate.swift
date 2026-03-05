@@ -16,11 +16,21 @@ final class ExternalDisplaySceneDelegate: UIResponder, UIWindowSceneDelegate {
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
-        guard
-            let windowScene = scene as? UIWindowScene,
-            let engine = SharedAppResources.renderEngine,
-            let appState = SharedAppResources.appState
-        else { return }
+        print("[ExternalDisplay] scene willConnectTo — role: \(session.role.rawValue)")
+        guard let windowScene = scene as? UIWindowScene else {
+            print("[ExternalDisplay] guard failed: not a UIWindowScene")
+            return
+        }
+        guard let engine = SharedAppResources.renderEngine else {
+            print("[ExternalDisplay] guard failed: SharedAppResources.renderEngine is nil")
+            return
+        }
+        guard let appState = SharedAppResources.appState else {
+            print("[ExternalDisplay] guard failed: SharedAppResources.appState is nil")
+            return
+        }
+
+        print("[ExternalDisplay] creating window on screen: \(windowScene.screen.bounds)")
 
         let win = UIWindow(windowScene: windowScene)
 
@@ -37,9 +47,11 @@ final class ExternalDisplaySceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = win
         appState.displayConnected = true
         appState.displayResolution = windowScene.screen.nativeBounds.size
+        print("[ExternalDisplay] window created, displayConnected = true")
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
+        print("[ExternalDisplay] sceneDidDisconnect")
         window = nil
         SharedAppResources.appState?.displayConnected = false
     }

@@ -34,13 +34,12 @@ private struct SplitLayoutView: View {
         NavigationSplitView {
             List {
                 Section("Content") {
-                    NavigationLink(destination: ContentBrowserView(bundles: allContent, title: "All Content")) {
+                    NavigationLink(destination: ContentBrowserView(category: nil, title: "All Content")) {
                         Label("All Content", systemImage: "square.grid.2x2")
                     }
-                    ForEach(populatedCategories, id: \.self) { category in
-                        let filtered = allContent.filter { $0.category == category }
-                        NavigationLink(destination: ContentBrowserView(bundles: filtered, title: category.displayName)) {
-                            Label(category.displayName, systemImage: category.systemImage)
+                    ForEach(populatedCategories, id: \.self) { cat in
+                        NavigationLink(destination: ContentBrowserView(category: cat, title: cat.displayName)) {
+                            Label(cat.displayName, systemImage: cat.systemImage)
                         }
                     }
                 }
@@ -71,7 +70,7 @@ private struct SplitLayoutView: View {
                     .environment(\.renderEngine, renderEngine)
             }
         } detail: {
-            ContentBrowserView(bundles: allContent, title: "All Content")
+            ContentBrowserView(category: nil, title: "All Content")
         }
         .safeAreaInset(edge: .bottom) {
             BottomToolbar()

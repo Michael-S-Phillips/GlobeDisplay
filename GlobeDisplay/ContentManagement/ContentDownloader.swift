@@ -129,7 +129,9 @@ final class ContentDownloader: NSObject {
                     if FileManager.default.fileExists(atPath: videoSource.path) {
                         try FileManager.default.removeItem(at: videoSource)
                     }
+                    print("[ContentDownloader] Moving \(location.lastPathComponent) → \(videoSource.path)")
                     try FileManager.default.moveItem(at: location, to: videoSource)
+                    print("[ContentDownloader] Starting frame extraction from \(videoSource.lastPathComponent)")
 
                     let frameCount = try await VideoFrameExtractor.extractFrames(
                         from: videoSource,
@@ -137,6 +139,7 @@ final class ContentDownloader: NSObject {
                         targetFPS: 5.0,
                         maxFrames: 120
                     )
+                    print("[ContentDownloader] Extracted \(frameCount) frames for \(id)")
                     // Remove the source video now that frames are extracted.
                     try? FileManager.default.removeItem(at: videoSource)
                     let updatedBundle = ContentBundle(
@@ -155,11 +158,13 @@ final class ContentDownloader: NSObject {
                         attribution: originalBundle?.attribution ?? "NOAA Science on a Sphere",
                         license: originalBundle?.license ?? "Public Domain (U.S. Government Work)"
                     )
+                    print("[ContentDownloader] Importing bundle \(updatedBundle.id) '\(updatedBundle.title)'")
                     await MainActor.run {
                         ContentManager.shared.importBundle(updatedBundle)
+                        print("[ContentDownloader] importedContent count: \(ContentManager.shared.importedContent.count)")
                     }
                 } catch {
-                    print("[ContentDownloader] Frame extraction failed for \(id): \(error.localizedDescription)")
+                    print("[ContentDownloader] ❌ Frame extraction failed for \(id): \(error) — \(error.localizedDescription)")
                     // Clean up on failure (success path removes the file above).
                     try? FileManager.default.removeItem(at: location)
                 }

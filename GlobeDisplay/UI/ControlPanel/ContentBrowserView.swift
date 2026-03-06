@@ -1,13 +1,22 @@
 import SwiftUI
 
 /// Displays the grid of available content bundles for a given category.
+/// Reads directly from ContentManager (which is @Observable) so the grid
+/// refreshes automatically when downloads complete or imports finish.
 struct ContentBrowserView: View {
 
     @Environment(AppState.self) private var appState
     @Environment(\.renderEngine) private var renderEngine
 
-    let bundles: [ContentBundle]
+    /// nil = show all content; non-nil = filter to that category.
+    let category: ContentCategory?
     let title: String
+
+    private var bundles: [ContentBundle] {
+        let all = ContentManager.shared.allContent()
+        guard let category else { return all }
+        return all.filter { $0.category == category }
+    }
 
     @State private var status: LoadStatus = .idle
     @State private var activeSequencer: AnimationSequencer?

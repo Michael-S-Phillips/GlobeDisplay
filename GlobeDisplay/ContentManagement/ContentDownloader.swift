@@ -1,4 +1,5 @@
 import Foundation
+import ImageIO
 import Observation
 
 /// Manages background URLSession downloads of SOS dataset archives and MOV video files.

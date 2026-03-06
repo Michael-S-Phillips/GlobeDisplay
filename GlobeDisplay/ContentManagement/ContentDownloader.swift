@@ -139,6 +139,15 @@ final class ContentDownloader: NSObject {
                         targetFPS: 5.0,
                         maxFrames: 120
                     )
+                    // Log actual frame dimensions so we can verify the video is 2:1 equirectangular.
+                    let firstFrame = destination.appendingPathComponent("0001.jpg")
+                    if let src = CGImageSourceCreateWithURL(firstFrame as CFURL, nil),
+                       let props = CGImageSourceCopyPropertiesAtIndex(src, 0, nil) as? [CFString: Any],
+                       let w = props[kCGImagePropertyPixelWidth] as? Int,
+                       let h = props[kCGImagePropertyPixelHeight] as? Int {
+                        let ratio = Double(w) / Double(h)
+                        print("[ContentDownloader] Frame size: \(w)×\(h) (aspect ratio \(String(format: "%.3f", ratio)), expected 2.000 for equirectangular)")
+                    }
                     print("[ContentDownloader] Extracted \(frameCount) frames for \(id)")
                     // Remove the source video now that frames are extracted.
                     try? FileManager.default.removeItem(at: videoSource)

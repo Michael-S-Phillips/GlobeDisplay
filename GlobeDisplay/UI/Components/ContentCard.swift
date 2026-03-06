@@ -122,12 +122,19 @@ struct ContentCard: View {
     }
 
     private func loadBundledImage() -> UIImage? {
-        guard let name = bundle.assets.primaryImageName else { return nil }
-        if let ui = UIImage(named: name) { return ui }
-        guard let url = Bundle.main.url(forResource: name, withExtension: "jpg")
-               ?? Bundle.main.url(forResource: name, withExtension: "png"),
-              let data = try? Data(contentsOf: url) else { return nil }
-        return UIImage(data: data)
+        // Bundled assets: look up by name in the app bundle.
+        if let name = bundle.assets.primaryImageName {
+            if let ui = UIImage(named: name) { return ui }
+            if let url = Bundle.main.url(forResource: name, withExtension: "jpg")
+                      ?? Bundle.main.url(forResource: name, withExtension: "png"),
+               let data = try? Data(contentsOf: url) { return UIImage(data: data) }
+        }
+        // Downloaded animations: use the first extracted frame as thumbnail.
+        if let dir = bundle.assets.sequenceDirectory, dir.hasPrefix("/") {
+            let first = URL(fileURLWithPath: dir).appendingPathComponent("0001.jpg")
+            if let data = try? Data(contentsOf: first) { return UIImage(data: data) }
+        }
+        return nil
     }
 }
 
@@ -192,11 +199,16 @@ private struct ContentInfoSheet: View {
     }
 
     private func loadThumbnail() -> UIImage? {
-        guard let name = bundle.assets.primaryImageName else { return nil }
-        if let ui = UIImage(named: name) { return ui }
-        guard let url = Bundle.main.url(forResource: name, withExtension: "jpg")
-               ?? Bundle.main.url(forResource: name, withExtension: "png"),
-              let data = try? Data(contentsOf: url) else { return nil }
-        return UIImage(data: data)
+        if let name = bundle.assets.primaryImageName {
+            if let ui = UIImage(named: name) { return ui }
+            if let url = Bundle.main.url(forResource: name, withExtension: "jpg")
+                      ?? Bundle.main.url(forResource: name, withExtension: "png"),
+               let data = try? Data(contentsOf: url) { return UIImage(data: data) }
+        }
+        if let dir = bundle.assets.sequenceDirectory, dir.hasPrefix("/") {
+            let first = URL(fileURLWithPath: dir).appendingPathComponent("0001.jpg")
+            if let data = try? Data(contentsOf: first) { return UIImage(data: data) }
+        }
+        return nil
     }
 }

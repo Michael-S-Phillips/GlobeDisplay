@@ -7,6 +7,9 @@ struct GlobeDisplayApp: App {
     @State private var renderEngine: RenderEngine? = {
         try? RenderEngine.make()
     }()
+    @State private var overlayController = OverlayController()
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @State private var showOnboarding = false
 
     var body: some Scene {
         WindowGroup {
@@ -21,6 +24,30 @@ struct GlobeDisplayApp: App {
                             // display scene.
                             SharedAppResources.renderEngine = engine
                             SharedAppResources.appState = appState
+
+                            // Start the overlay observation / render loop.
+                            overlayController.start(appState: appState, renderEngine: engine)
+
+                            // Monitor network connectivity.
+                            NetworkMonitor.shared.start()
+
+                            // Show onboarding on first launch.
+                            if !hasCompletedOnboarding {
+                                showOnboarding = true
+                            }
+                        }
+                        .task {
+                            // Keep AppState.isNetworkAvailable in sync with NetworkMonitor.
+                            while true {
+                                appState.isNetworkAvailable = NetworkMonitor.shared.isConnected
+                                try? await Task.sleep(for: .seconds(2))
+                            }
+                        }
+                        .sheet(isPresented: $showOnboarding) {
+                            OnboardingView {
+                                hasCompletedOnboarding = true
+                                showOnboarding = false
+                            }
                         }
                 } else {
                     ContentUnavailableView(

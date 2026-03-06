@@ -9,6 +9,7 @@ final class ContentBundleTests: XCTestCase {
         let original = ContentBundle(
             id: UUID(uuidString: "12345678-1234-1234-1234-123456789012")!,
             title: "Earth — Blue Marble",
+            description: "Test description.",
             category: .planets,
             contentType: .staticImage,
             resolution: CodableSize(width: 2048, height: 1024),

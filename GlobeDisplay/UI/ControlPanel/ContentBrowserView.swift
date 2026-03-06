@@ -7,8 +7,10 @@ struct ContentBrowserView: View {
     @Environment(\.renderEngine) private var renderEngine
 
     let bundles: [ContentBundle]
+    let title: String
 
     @State private var status: LoadStatus = .idle
+    @State private var activeSequencer: AnimationSequencer?
 
     private let columns = [GridItem(.adaptive(minimum: 160), spacing: 12)]
 
@@ -25,7 +27,7 @@ struct ContentBrowserView: View {
             }
             .padding()
         }
-        .navigationTitle("Planets")
+        .navigationTitle(title)
         .safeAreaInset(edge: .top) {
             statusBanner
         }
@@ -68,14 +70,59 @@ struct ContentBrowserView: View {
             status = .error("No render engine in environment")
             return
         }
+
+        // Stop any running animation before loading new content.
+        activeSequencer?.stop()
+        activeSequencer = nil
+        engine.animationSequencer = nil
+
         status = .loading(bundle.title)
-        Task {
-            do {
-                let image = try ContentManager.shared.loadCGImage(for: bundle)
-                try await engine.loadTexture(from: image)
-                status = .ready(bundle.title)
-            } catch {
-                status = .error(error.localizedDescription)
+
+        switch bundle.contentType {
+        case .imageSequence:
+            guard let dirName = bundle.assets.sequenceDirectory else {
+                status = .error("No sequence directory specified for \(bundle.title)")
+                return
+            }
+            Task {
+                do {
+                    // Resolve the sequence directory from the app bundle.
+                    let directory: URL
+                    if let bundleURL = Bundle.main.url(
+                        forResource: dirName,
+                        withExtension: nil
+                    ) {
+                        directory = bundleURL
+                    } else {
+                        // Fall back to the Documents directory for user-imported content.
+                        directory = FileManager.default
+                            .urls(for: .documentDirectory, in: .userDomainMask)[0]
+                            .appendingPathComponent(dirName, isDirectory: true)
+                    }
+
+                    let sequencer = AnimationSequencer()
+                    if let fps = bundle.assets.framerate {
+                        sequencer.framerate = fps
+                    }
+                    try await sequencer.load(from: directory)
+                    sequencer.play(engine: engine)
+                    activeSequencer = sequencer
+                    engine.animationSequencer = sequencer
+                    status = .ready(bundle.title)
+                } catch {
+                    status = .error(error.localizedDescription)
+                }
+            }
+
+        case .staticImage, .video:
+            Task {
+                do {
+                    let image = try ContentManager.shared.loadCGImage(for: bundle)
+                    try await engine.loadTexture(from: image)
+                    status = .ready(bundle.title)
+                } catch {
+                    status = .error(error.localizedDescription)
+                }
             }
         }
     }

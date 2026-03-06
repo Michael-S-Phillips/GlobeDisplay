@@ -5,6 +5,12 @@ import CoreGraphics
 // Matches the Uniforms struct in EquirectangularShaders.metal exactly.
 private struct Uniforms {
     var rotationOffset: Float
+    var aspectRatio: Float
+    var projectionGamma: Float
+    var projectionRadius: Float
+    var brightness: Float       // output multiplier, default 1.0
+    var flipHorizontal: Float   // 1.0 = mirror east/west
+    var flipVertical: Float     // 1.0 = flip north/south
 }
 
 enum RenderEngineError: Error {
@@ -13,6 +19,10 @@ enum RenderEngineError: Error {
     case shaderLibraryFailed
     case shaderFunctionNotFound(String)
     case pipelineStateFailed(Error)
+    case textureCreationFailed
+    case bufferCreationFailed
+    case blitEncoderFailed
+    case cgContextCreationFailed
 }
 
 /// Owns the Metal rendering pipeline and composites equirectangular frames
@@ -30,6 +40,33 @@ final class RenderEngine: NSObject {
 
     /// Longitude rotation in degrees (0–360). Updated in real time from the UI slider.
     var rotationOffset: Double = 0.0
+
+    /// Fisheye projection correction exponent. 1 = equidistant, 2 = equisolid.
+    /// Tune this slider until latitude rings appear horizontal on the globe.
+    var projectionGamma: Double = 1.0
+
+    /// cs-space radius at which the south pole appears. 0.7 empirically calibrated for MagicPlanet.
+    var projectionRadius: Double = 0.7
+
+    /// Output brightness multiplier (0.5–1.5). Default 1.0.
+    var brightness: Double = 1.0
+
+    /// Mirror the east/west (longitude) direction.
+    var flipHorizontal: Bool = false
+
+    /// Flip the north/south (co-latitude) direction.
+    var flipVertical: Bool = false
+
+    /// Retains the active AnimationSequencer so its lifecycle is tied to the engine.
+    var animationSequencer: AnimationSequencer?
+
+    /// Overlay texture (RGBA, transparent background) composited over the base map.
+    /// Set to nil to disable overlay blending.
+    var overlayTexture: MTLTexture?
+
+    /// A reusable 1×1 fully-transparent texture passed to the shader when no overlay is active.
+    /// Avoids a nil check branch in every draw call.
+    private var clearOverlayTexture: MTLTexture?
 
     // MARK: - Init
 
@@ -52,7 +89,18 @@ final class RenderEngine: NSObject {
         }
         let engine = RenderEngine(device: device, commandQueue: commandQueue)
         try engine.buildPipeline()
+        engine.buildClearOverlayTexture()
         return engine
+    }
+
+    private func buildClearOverlayTexture() {
+        let desc = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .rgba8Unorm, width: 1, height: 1, mipmapped: false
+        )
+        desc.usage = .shaderRead
+        desc.storageMode = .shared
+        clearOverlayTexture = device.makeTexture(descriptor: desc)
+        // All bytes default to zero → fully transparent pixel.
     }
 
     private func buildPipeline() throws {
@@ -91,6 +139,145 @@ final class RenderEngine: NSObject {
         ]
         baseTexture = try await loader.newTexture(cgImage: image, options: options)
     }
+
+    // MARK: - Animation Frame Update
+
+    /// Updates the base texture directly from a CGImage for animation playback.
+    ///
+    /// Bypasses MTKTextureLoader's async overhead by rendering the CGImage into a
+    /// CPU-accessible staging `MTLBuffer` via a `CGContext`, then blitting to a
+    /// GPU-private `MTLTexture` using a `MTLBlitCommandEncoder`.
+    func updateAnimationFrame(_ image: CGImage) throws {
+        let width = image.width
+        let height = image.height
+        let bytesPerPixel = 4
+        let bytesPerRow = width * bytesPerPixel
+        let byteCount = bytesPerRow * height
+
+        // Allocate a shared-storage Metal buffer so the CPU can write pixels
+        // and the GPU can read them without a copy through the kernel.
+        guard let stagingBuffer = device.makeBuffer(
+            length: byteCount,
+            options: .storageModeShared
+        ) else {
+            throw RenderEngineError.bufferCreationFailed
+        }
+
+        // Render CGImage into the staging buffer's raw memory using a CGContext.
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo: CGBitmapInfo = [
+            .byteOrder32Big,
+            CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        ]
+
+        guard let context = CGContext(
+            data: stagingBuffer.contents(),
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: bytesPerRow,
+            space: colorSpace,
+            bitmapInfo: bitmapInfo.rawValue
+        ) else {
+            throw RenderEngineError.cgContextCreationFailed
+        }
+
+        context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+        // Create the private destination texture.
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .rgba8Unorm,
+            width: width,
+            height: height,
+            mipmapped: false
+        )
+        descriptor.usage = .shaderRead
+        descriptor.storageMode = .private
+
+        guard let privateTexture = device.makeTexture(descriptor: descriptor) else {
+            throw RenderEngineError.textureCreationFailed
+        }
+
+        // Blit from the staging buffer into the private texture.
+        guard
+            let commandBuffer = commandQueue.makeCommandBuffer(),
+            let blitEncoder = commandBuffer.makeBlitCommandEncoder()
+        else {
+            throw RenderEngineError.blitEncoderFailed
+        }
+
+        blitEncoder.copy(
+            from: stagingBuffer,
+            sourceOffset: 0,
+            sourceBytesPerRow: bytesPerRow,
+            sourceBytesPerImage: byteCount,
+            sourceSize: MTLSize(width: width, height: height, depth: 1),
+            to: privateTexture,
+            destinationSlice: 0,
+            destinationLevel: 0,
+            destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0)
+        )
+
+        blitEncoder.endEncoding()
+        commandBuffer.commit()
+
+        baseTexture = privateTexture
+    }
+
+    // MARK: - Overlay Texture
+
+    /// Uploads a CGImage as the overlay texture (RGBA with transparency).
+    /// Uses the same CPU→GPU blit path as updateAnimationFrame.
+    func updateOverlayTexture(from image: CGImage) throws {
+        let width = image.width
+        let height = image.height
+        let bytesPerRow = width * 4
+        let byteCount = bytesPerRow * height
+
+        guard let stagingBuffer = device.makeBuffer(
+            length: byteCount, options: .storageModeShared
+        ) else { throw RenderEngineError.bufferCreationFailed }
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo: CGBitmapInfo = [
+            .byteOrder32Big,
+            CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        ]
+        guard let context = CGContext(
+            data: stagingBuffer.contents(),
+            width: width, height: height,
+            bitsPerComponent: 8, bytesPerRow: bytesPerRow,
+            space: colorSpace, bitmapInfo: bitmapInfo.rawValue
+        ) else { throw RenderEngineError.cgContextCreationFailed }
+
+        context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .rgba8Unorm, width: width, height: height, mipmapped: false
+        )
+        descriptor.usage = .shaderRead
+        descriptor.storageMode = .private
+
+        guard let privateTexture = device.makeTexture(descriptor: descriptor)
+        else { throw RenderEngineError.textureCreationFailed }
+
+        guard
+            let commandBuffer = commandQueue.makeCommandBuffer(),
+            let blitEncoder = commandBuffer.makeBlitCommandEncoder()
+        else { throw RenderEngineError.blitEncoderFailed }
+
+        blitEncoder.copy(
+            from: stagingBuffer, sourceOffset: 0,
+            sourceBytesPerRow: bytesPerRow, sourceBytesPerImage: byteCount,
+            sourceSize: MTLSize(width: width, height: height, depth: 1),
+            to: privateTexture, destinationSlice: 0, destinationLevel: 0,
+            destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0)
+        )
+        blitEncoder.endEncoding()
+        commandBuffer.commit()
+
+        overlayTexture = privateTexture
+    }
 }
 
 // MARK: - MTKViewDelegate
@@ -121,7 +308,18 @@ extension RenderEngine: MTKViewDelegate {
 
         if let texture = baseTexture {
             encoder.setFragmentTexture(texture, index: 0)
-            var uniforms = Uniforms(rotationOffset: Float(MapProjection.normalizedRotation(rotationOffset)))
+            // Use the live overlay texture, or fall back to the 1×1 clear placeholder.
+            encoder.setFragmentTexture(overlayTexture ?? clearOverlayTexture, index: 1)
+            let aspect = Float(view.drawableSize.height / view.drawableSize.width)
+            var uniforms = Uniforms(
+                rotationOffset: Float(MapProjection.normalizedRotation(rotationOffset)),
+                aspectRatio: aspect,
+                projectionGamma: Float(projectionGamma),
+                projectionRadius: Float(projectionRadius),
+                brightness: Float(brightness),
+                flipHorizontal: flipHorizontal ? 1.0 : 0.0,
+                flipVertical: flipVertical ? 1.0 : 0.0
+            )
             encoder.setFragmentBytes(&uniforms, length: MemoryLayout<Uniforms>.size, index: 0)
             encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         }

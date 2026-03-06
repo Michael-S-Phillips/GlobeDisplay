@@ -31,4 +31,8 @@ final class AppState {
 
     // MARK: - Network
     var isNetworkAvailable: Bool = true
+
+    // MARK: - Animation playback
+    var animationPlaybackRate: Double = 1.0
+    var activeAnimationSequencer: AnimationSequencer?
 }

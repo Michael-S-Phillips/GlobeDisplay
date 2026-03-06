@@ -48,7 +48,7 @@ struct ContentCard: View {
 
     @ViewBuilder
     private var thumbnailView: some View {
-        ZStack(alignment: .topTrailing) {
+        ZStack(alignment: .bottomTrailing) {
             if let uiImage = loadBundledImage() {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -58,25 +58,51 @@ struct ContentCard: View {
                     .fill(Color.secondary.opacity(0.3))
                     .aspectRatio(2, contentMode: .fill)
                     .overlay(
-                        Image(systemName: "globe")
+                        Image(systemName: bundle.contentType == .imageSequence ? "film" : "globe")
                             .foregroundStyle(.secondary)
                     )
             }
 
-            if isDownloadable {
-                Image(systemName: "cloud.arrow.down")
-                    .font(.caption)
-                    .padding(4)
-                    .background(.ultraThinMaterial, in: Circle())
-                    .padding(6)
-                    .accessibilityLabel("Downloadable content")
+            if let progress = currentDownloadProgress {
+                // Download in progress: show progress bar overlay.
+                VStack(spacing: 3) {
+                    ProgressView(value: progress)
+                        .progressViewStyle(.linear)
+                        .tint(.cyan)
+                    Text("\(Int(progress * 100))%")
+                        .font(.system(size: 9))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 6))
+                .padding(6)
+            } else if isDownloadable {
+                // Not downloaded yet: show download button.
+                Button {
+                    ContentDownloader.shared.download(bundle: bundle)
+                } label: {
+                    Label("Download", systemImage: "cloud.arrow.down.fill")
+                        .font(.caption2)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 5)
+                        .background(.ultraThinMaterial, in: Capsule())
+                }
+                .buttonStyle(.plain)
+                .padding(6)
+                .accessibilityLabel("Download \(bundle.title)")
             }
         }
     }
 
-    /// True when the bundle is marked as downloadable but not yet locally present.
+    /// True when the bundle has a remote URL and has not yet been downloaded.
     private var isDownloadable: Bool {
-        bundle.source == .downloaded && bundle.assets.downloadURL != nil
+        bundle.assets.downloadURL != nil && !ContentManager.shared.isDownloaded(bundle.id)
+    }
+
+    /// Non-nil during an active download for this bundle (0.0 – 1.0).
+    private var currentDownloadProgress: Double? {
+        ContentDownloader.shared.downloadProgress[bundle.id]
     }
 
     private var selectionBorder: some View {

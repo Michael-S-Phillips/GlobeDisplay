@@ -68,8 +68,20 @@ struct ContentAssets: Codable, Sendable {
     /// Remote URL for downloading this content bundle as a ZIP archive.
     var downloadURL: URL? = nil
 
-    init(primaryImageName: String? = nil) {
+    init(
+        primaryImageName: String? = nil,
+        sequenceDirectory: String? = nil,
+        videoPath: String? = nil,
+        frameCount: Int? = nil,
+        framerate: Double? = nil,
+        downloadURL: URL? = nil
+    ) {
         self.primaryImageName = primaryImageName
+        self.sequenceDirectory = sequenceDirectory
+        self.videoPath = videoPath
+        self.frameCount = frameCount
+        self.framerate = framerate
+        self.downloadURL = downloadURL
     }
 }
 

@@ -1,6 +1,7 @@
 import CoreGraphics
 import ImageIO
 import Foundation
+import Observation
 
 enum ContentManagerError: Error, LocalizedError {
     case imageNotFound(String)
@@ -15,7 +16,7 @@ enum ContentManagerError: Error, LocalizedError {
 }
 
 /// Discovers, indexes, and serves content to the rendering pipeline.
-/// Phase 1: bundled planetary textures only.
+@Observable
 @MainActor
 final class ContentManager {
 
@@ -192,14 +193,159 @@ final class ContentManager {
         ]
     }
 
-    /// Returns bundled + imported content combined.
+    /// Returns animated datasets available for download from NOAA SOS.
+    /// Entries that have already been downloaded appear in `importedContent` instead.
+    func downloadableCatalog() -> [ContentBundle] {
+        [
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000001")!,
+                title: "Ocean Currents — Beauty",
+                description: "NASA's Perpetual Ocean animation visualizes the paths of ocean surface currents from 2005 to 2007, simulated by the ECCO2 model. Currents are colored by speed — calm blue regions give way to fast-moving red and yellow streams. The animation reveals the intricate global conveyor of heat and nutrients that shapes climate and marine life worldwide.",
+                category: .ocean,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/perpetual_ocean_beauty.mov")!
+                ),
+                attribution: "NASA/Goddard Space Flight Center Scientific Visualization Studio",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000002")!,
+                title: "Ocean Currents — Temperature",
+                description: "This version of NASA's Perpetual Ocean combines current paths with sea surface temperature data. Cool blues mark cold polar and deep upwelling waters; warm reds and oranges trace the Gulf Stream, Kuroshio Current, and equatorial warm pools. The overlay reveals how ocean circulation redistributes heat from the tropics toward the poles.",
+                category: .ocean,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/perpetual_ocean_temp.mov")!
+                ),
+                attribution: "NASA/Goddard Space Flight Center Scientific Visualization Studio",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000003")!,
+                title: "Ocean Currents — Salinity",
+                description: "Ocean salinity drives thermohaline circulation — saltier, denser water sinks; fresher water rises. This animation shows modeled surface salinity variations alongside current paths. Blue indicates low-salinity water (near river mouths and melting ice); red indicates high-salinity regions. The tropics are saltiest due to high evaporation; polar seas are freshened by ice melt.",
+                category: .ocean,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/perpetual_ocean_salinity.mov")!
+                ),
+                attribution: "NASA/Goddard Space Flight Center Scientific Visualization Studio",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000004")!,
+                title: "Thermohaline Conveyor Belt",
+                description: "The global thermohaline circulation — Earth's great oceanic conveyor belt — transports heat, salt, carbon, and nutrients throughout the world's oceans over centuries to millennia. Warm surface water flows toward the poles; as it cools and becomes saltier, it sinks and flows back as cold deep water. This circulation regulates climate on a planetary scale, including the mild climate of northwest Europe.",
+                category: .ocean,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/ocean_conveyor_belt_400.mov")!
+                ),
+                attribution: "NOAA Science on a Sphere",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000005")!,
+                title: "Tectonic Plate Reconstruction",
+                description: "Watch 200 million years of plate tectonic movement compressed into minutes. Starting from the supercontinent Pangaea, the continents drift to their current positions as the Atlantic Ocean opens, India collides with Asia to form the Himalayas, and the Pacific shrinks. This reconstruction is based on paleomagnetic data, sea floor spreading records, and fossil distribution patterns.",
+                category: .earth,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/plate_movement_400.mov")!
+                ),
+                attribution: "NOAA Science on a Sphere",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000006")!,
+                title: "Atmospheric Winds — GEOS-5",
+                description: "A global simulation of Earth's atmospheric winds from NASA's GEOS-5 model, showing the swirling, turbulent flow of air across the planet. Jet streams, trade winds, tropical cyclones, and polar vortices are all visible. The intricate, dynamic patterns reveal how the atmosphere continuously redistributes heat and moisture from the tropics to the poles.",
+                category: .atmosphere,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/nccs_wind_400.mov")!
+                ),
+                attribution: "NASA/Goddard Space Flight Center Scientific Visualization Studio",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000007")!,
+                title: "Sea Ice Extent 1978–Present",
+                description: "Forty-plus years of Arctic and Antarctic sea ice coverage from satellite passive microwave sensors. Watch the seasonal freeze-thaw cycle play out year after year while the long-term trend of Arctic ice loss becomes unmistakable. Antarctic sea ice shows higher year-to-year variability. Sea ice reflects sunlight back to space; its loss accelerates warming in a feedback loop called ice-albedo feedback.",
+                category: .cryosphere,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/10day_seaice.mov")!
+                ),
+                attribution: "NOAA/NSIDC",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000008")!,
+                title: "CO₂ Concentration — Annual Cycle",
+                description: "A NASA model simulation showing the annual cycle of atmospheric carbon dioxide concentration. CO₂ levels pulse with the seasons — Northern Hemisphere vegetation absorbs CO₂ in summer, releasing it in winter — while the long-term concentration rises year over year due to fossil fuel combustion. The visualization tracks CO₂ from power plants, cities, fires, and ocean outgassing across the globe.",
+                category: .atmosphere,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/geos_5_carbon_400_audio.mov")!
+                ),
+                attribution: "NASA/Goddard Space Flight Center Scientific Visualization Studio",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+            ContentBundle(
+                id: UUID(uuidString: "A0000000-0000-0000-0000-000000000009")!,
+                title: "Hurricane Tracks 1950–2020",
+                description: "Seven decades of tropical cyclone tracks from all ocean basins worldwide. Each storm is colored by intensity — tropical depression, tropical storm, and Category 1–5 hurricane. The pattern reveals preferred genesis regions, characteristic recurving paths, and how the frequency and intensity of Atlantic hurricanes has changed over the observational record. The most active basins are the northwest Pacific (typhoons) and north Atlantic.",
+                category: .atmosphere,
+                contentType: .imageSequence,
+                resolution: CodableSize(width: 2048, height: 1024),
+                source: .downloaded,
+                assets: ContentAssets(
+                    downloadURL: URL(string: "https://sos.noaa.gov/videos-original/cumulative_hurricanes.mov")!
+                ),
+                attribution: "NOAA/NHC",
+                license: "Public Domain (U.S. Government Work)"
+            ),
+        ]
+    }
+
+    /// True if a bundle with `id` has already been downloaded and imported.
+    func isDownloaded(_ id: UUID) -> Bool {
+        importedContent.contains { $0.id == id }
+    }
+
+    /// Returns bundled + downloadable (not yet imported) + imported content.
     func allContent() -> [ContentBundle] {
-        bundledContent() + importedContent
+        let imported = importedContent
+        let downloadable = downloadableCatalog().filter { catalog in
+            !imported.contains { $0.id == catalog.id }
+        }
+        return bundledContent() + downloadable + imported
     }
 
     /// Adds an externally parsed bundle to the in-memory catalog.
     func importBundle(_ bundle: ContentBundle) {
-        importedContent.append(bundle)
+        // Avoid duplicates (re-download or retry).
+        if !importedContent.contains(where: { $0.id == bundle.id }) {
+            importedContent.append(bundle)
+        }
     }
 
     // MARK: - Image Loading

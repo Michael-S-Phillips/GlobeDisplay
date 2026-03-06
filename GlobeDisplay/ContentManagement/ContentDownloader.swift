@@ -1,14 +1,12 @@
 import Foundation
+import Observation
 
-/// Manages background URLSession downloads of SOS dataset archives.
+/// Manages background URLSession downloads of SOS dataset archives and MOV video files.
 ///
-/// Downloads are tracked by `ContentBundle.id`. After a download finishes the
-/// raw file is moved into the app's Application Support directory and
+/// Downloads are tracked by `ContentBundle.id`. After a MOV download finishes,
+/// `VideoFrameExtractor` converts it to a numbered JPEG sequence and
 /// `ContentManager` is notified via `importBundle(_:)`.
-///
-/// - Note: Full ZIP extraction is deferred (TODO). The current implementation
-///   saves the downloaded file and attempts to parse it as a pre-extracted
-///   directory bundle using `BundleParser`.
+@Observable
 @MainActor
 final class ContentDownloader: NSObject {
 
@@ -26,6 +24,9 @@ final class ContentDownloader: NSObject {
 
     /// Resume data saved when a task is cancelled, keyed by bundle ID.
     private var resumeData: [UUID: Data] = [:]
+
+    /// Original bundle metadata preserved during download, keyed by bundle ID.
+    private var pendingBundles: [UUID: ContentBundle] = [:]
 
     // MARK: - Session
 
@@ -68,6 +69,7 @@ final class ContentDownloader: NSObject {
 
         task.taskDescription = bundle.id.uuidString
         activeTasks[bundle.id] = task
+        pendingBundles[bundle.id] = bundle
         downloadProgress[bundle.id] = 0.0
         task.resume()
     }
@@ -85,6 +87,7 @@ final class ContentDownloader: NSObject {
                 }
                 self.activeTasks.removeValue(forKey: id)
                 self.downloadProgress.removeValue(forKey: id)
+                self.pendingBundles.removeValue(forKey: id)
             }
         }
     }
@@ -100,37 +103,80 @@ final class ContentDownloader: NSObject {
     func didFinishDownloading(taskDescription: String?, location: URL) {
         guard let desc = taskDescription, let id = UUID(uuidString: desc) else { return }
 
-        let destination = contentDirectory(for: id)
+        let originalBundle = pendingBundles[id]
+        pendingBundles.removeValue(forKey: id)
 
-        do {
-            try FileManager.default.createDirectory(
-                at: destination,
-                withIntermediateDirectories: true
-            )
+        // Detect video files by the original download URL extension (more reliable
+        // than the temp file extension from URLSession).
+        let downloadExt = (originalBundle?.assets.downloadURL?.pathExtension
+            ?? location.pathExtension).lowercased()
+        let isVideo = downloadExt == "mov" || downloadExt == "mp4"
 
-            // Move the downloaded file into the destination directory.
-            // TODO: If the downloaded file is a ZIP archive, extract it here
-            // instead of moving the raw file. iOS does not have a built-in
-            // unzip command; a third-party library (e.g. ZIPFoundation) or a
-            // custom implementation would be needed for full ZIP support.
-            let destFile = destination.appendingPathComponent(
-                location.lastPathComponent
-            )
-            if FileManager.default.fileExists(atPath: destFile.path) {
-                try FileManager.default.removeItem(at: destFile)
+        if isVideo {
+            // Extract frames asynchronously; do not block the main actor.
+            let destination = contentDirectory(for: id)
+            Task.detached(priority: .utility) { [weak self] in
+                do {
+                    try FileManager.default.createDirectory(
+                        at: destination,
+                        withIntermediateDirectories: true
+                    )
+                    let frameCount = try await VideoFrameExtractor.extractFrames(
+                        from: location,
+                        to: destination,
+                        targetFPS: 5.0,
+                        maxFrames: 120
+                    )
+                    let updatedBundle = ContentBundle(
+                        id: originalBundle?.id ?? id,
+                        title: originalBundle?.title ?? "Animated Dataset",
+                        description: originalBundle?.description ?? "",
+                        category: originalBundle?.category ?? .ocean,
+                        contentType: .imageSequence,
+                        resolution: CodableSize(width: 2048, height: 1024),
+                        source: .downloaded,
+                        assets: ContentAssets(
+                            sequenceDirectory: destination.path,
+                            frameCount: frameCount,
+                            framerate: 5.0
+                        ),
+                        attribution: originalBundle?.attribution ?? "NOAA Science on a Sphere",
+                        license: originalBundle?.license ?? "Public Domain (U.S. Government Work)"
+                    )
+                    await MainActor.run {
+                        ContentManager.shared.importBundle(updatedBundle)
+                    }
+                } catch {
+                    print("[ContentDownloader] Frame extraction failed for \(id): \(error.localizedDescription)")
+                }
+                // Clean up the original video file to save space.
+                try? FileManager.default.removeItem(at: location)
+                await MainActor.run { [weak self] in
+                    self?.activeTasks.removeValue(forKey: id)
+                    self?.downloadProgress.removeValue(forKey: id)
+                }
             }
-            try FileManager.default.moveItem(at: location, to: destFile)
-
-            // Attempt to parse the destination as a bundle directory.
-            let bundle = try BundleParser.parse(directory: destination)
-            ContentManager.shared.importBundle(bundle)
-        } catch {
-            // Log and surface the error; do not crash.
-            print("[ContentDownloader] Failed to process download for \(id): \(error.localizedDescription)")
+        } else {
+            // Non-video path: treat as a pre-extracted SOS bundle directory.
+            let destination = contentDirectory(for: id)
+            do {
+                try FileManager.default.createDirectory(
+                    at: destination,
+                    withIntermediateDirectories: true
+                )
+                let destFile = destination.appendingPathComponent(location.lastPathComponent)
+                if FileManager.default.fileExists(atPath: destFile.path) {
+                    try FileManager.default.removeItem(at: destFile)
+                }
+                try FileManager.default.moveItem(at: location, to: destFile)
+                let bundle = try BundleParser.parse(directory: destination)
+                ContentManager.shared.importBundle(bundle)
+            } catch {
+                print("[ContentDownloader] Failed to process download for \(id): \(error.localizedDescription)")
+            }
+            activeTasks.removeValue(forKey: id)
+            downloadProgress.removeValue(forKey: id)
         }
-
-        activeTasks.removeValue(forKey: id)
-        downloadProgress.removeValue(forKey: id)
     }
 
     func didCompleteWithError(taskDescription: String?, error: Error?) {

@@ -109,6 +109,13 @@ private struct BottomToolbar: View {
             Divider()
                 .frame(height: 32)
 
+            if appState.currentContent?.contentType == .imageSequence {
+                Divider()
+                    .frame(height: 32)
+
+                animationSpeedSlider
+            }
+
             overlayToggles
 
             if anyOverlayEnabled {
@@ -132,6 +139,13 @@ private struct BottomToolbar: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
         .background(.regularMaterial)
+        .onChange(of: appState.animationPlaybackRate) { _, newRate in
+            guard let sequencer = appState.activeAnimationSequencer,
+                  let engine = renderEngine,
+                  let baseFPS = appState.currentContent?.assets.framerate else { return }
+            sequencer.framerate = baseFPS * newRate
+            sequencer.play(engine: engine)
+        }
     }
 
     private var anyOverlayEnabled: Bool {
@@ -280,6 +294,29 @@ private struct BottomToolbar: View {
                     .foregroundStyle(status.isError ? .red : .secondary)
                     .lineLimit(1)
             }
+        }
+    }
+
+    private var animationSpeedSlider: some View {
+        @Bindable var state = appState
+        return HStack {
+            Image(systemName: "play.fill")
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+
+            Slider(
+                value: $state.animationPlaybackRate,
+                in: 0.25...4.0,
+                step: 0.25
+            ) {
+                Text("Speed")
+            } minimumValueLabel: {
+                Text("¼×").font(.caption2)
+            } maximumValueLabel: {
+                Text("4×").font(.caption2)
+            }
+            .accessibilityLabel("Animation speed")
+            .accessibilityValue(String(format: "%.2f×", appState.animationPlaybackRate))
         }
     }
 

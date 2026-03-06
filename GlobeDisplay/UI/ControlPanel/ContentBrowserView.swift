@@ -65,7 +65,15 @@ struct ContentBrowserView: View {
     }
 
     private func loadContent(_ bundle: ContentBundle) {
+        // If the bundle is a downloadable catalog entry not yet available locally,
+        // prompt the user to download it rather than attempting to load.
+        if bundle.assets.downloadURL != nil && !ContentManager.shared.isDownloaded(bundle.id) {
+            status = .error("Tap the Download button on the card to download this dataset.")
+            return
+        }
+
         appState.currentContent = bundle
+
         guard let engine = renderEngine else {
             status = .error("No render engine in environment")
             return
@@ -74,6 +82,7 @@ struct ContentBrowserView: View {
         // Stop any running animation before loading new content.
         activeSequencer?.stop()
         activeSequencer = nil
+        appState.activeAnimationSequencer = nil
         engine.animationSequencer = nil
 
         status = .loading(bundle.title)
@@ -86,27 +95,31 @@ struct ContentBrowserView: View {
             }
             Task {
                 do {
-                    // Resolve the sequence directory from the app bundle.
+                    // Resolve the sequence directory:
+                    // • Absolute paths (starting with "/") are used directly — these come from
+                    //   downloaded content stored in Application Support.
+                    // • Relative names are looked up in the app bundle, then Documents.
                     let directory: URL
-                    if let bundleURL = Bundle.main.url(
+                    if dirName.hasPrefix("/") {
+                        directory = URL(fileURLWithPath: dirName, isDirectory: true)
+                    } else if let bundleURL = Bundle.main.url(
                         forResource: dirName,
                         withExtension: nil
                     ) {
                         directory = bundleURL
                     } else {
-                        // Fall back to the Documents directory for user-imported content.
                         directory = FileManager.default
                             .urls(for: .documentDirectory, in: .userDomainMask)[0]
                             .appendingPathComponent(dirName, isDirectory: true)
                     }
 
                     let sequencer = AnimationSequencer()
-                    if let fps = bundle.assets.framerate {
-                        sequencer.framerate = fps
-                    }
+                    let baseFPS = bundle.assets.framerate ?? 15.0
+                    sequencer.framerate = baseFPS * appState.animationPlaybackRate
                     try await sequencer.load(from: directory)
                     sequencer.play(engine: engine)
                     activeSequencer = sequencer
+                    appState.activeAnimationSequencer = sequencer
                     engine.animationSequencer = sequencer
                     status = .ready(bundle.title)
                 } catch {

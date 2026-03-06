@@ -65,10 +65,13 @@ struct ContentBrowserView: View {
     }
 
     private func loadContent(_ bundle: ContentBundle) {
-        // If the bundle is a downloadable catalog entry not yet available locally,
-        // prompt the user to download it rather than attempting to load.
+        // If the bundle is a downloadable catalog entry not yet available locally, block the load.
         if bundle.assets.downloadURL != nil && !ContentManager.shared.isDownloaded(bundle.id) {
-            status = .error("Tap the Download button on the card to download this dataset.")
+            if ContentDownloader.shared.downloadProgress[bundle.id] != nil {
+                status = .error("Extracting frames — please wait a moment.")
+            } else {
+                status = .error("Tap the Download button on the card to download this dataset.")
+            }
             return
         }
 

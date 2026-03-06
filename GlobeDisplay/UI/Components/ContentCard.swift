@@ -64,14 +64,24 @@ struct ContentCard: View {
             }
 
             if let progress = currentDownloadProgress {
-                // Download in progress: show progress bar overlay.
+                // Download/extraction in progress: show progress bar overlay.
                 VStack(spacing: 3) {
-                    ProgressView(value: progress)
-                        .progressViewStyle(.linear)
-                        .tint(.cyan)
-                    Text("\(Int(progress * 100))%")
-                        .font(.system(size: 9))
-                        .foregroundStyle(.secondary)
+                    if progress < 1.0 {
+                        ProgressView(value: progress)
+                            .progressViewStyle(.linear)
+                            .tint(.cyan)
+                        Text("\(Int(progress * 100))%")
+                            .font(.system(size: 9))
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .scaleEffect(0.7)
+                            .tint(.cyan)
+                        Text("Extracting…")
+                            .font(.system(size: 9))
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 6)

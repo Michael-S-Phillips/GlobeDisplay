@@ -92,7 +92,7 @@ struct ContentCard: View {
                 Button {
                     ContentDownloader.shared.download(bundle: bundle)
                 } label: {
-                    Label("Download", systemImage: "cloud.arrow.down.fill")
+                    Label("Download", systemImage: "icloud.and.arrow.down.fill")
                         .font(.caption2)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 5)

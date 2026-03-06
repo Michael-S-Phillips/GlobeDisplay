@@ -5,6 +5,7 @@ struct ContentCard: View {
     let bundle: ContentBundle
     let isSelected: Bool
 
+    @Environment(ContentManager.self) private var contentManager
     @State private var showInfo = false
 
     var body: some View {
@@ -107,7 +108,7 @@ struct ContentCard: View {
 
     /// True when the bundle has a remote URL and has not yet been downloaded.
     private var isDownloadable: Bool {
-        bundle.assets.downloadURL != nil && !ContentManager.shared.isDownloaded(bundle.id)
+        bundle.assets.downloadURL != nil && !contentManager.isDownloaded(bundle.id)
     }
 
     /// Non-nil during an active download for this bundle (0.0 – 1.0).

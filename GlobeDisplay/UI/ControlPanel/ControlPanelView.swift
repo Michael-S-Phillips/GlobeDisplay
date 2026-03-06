@@ -14,10 +14,11 @@ struct ControlPanelView: View {
 private struct SplitLayoutView: View {
 
     @Environment(AppState.self) private var appState
+    @Environment(ContentManager.self) private var contentManager
     @Environment(\.renderEngine) private var renderEngine
 
     private var allContent: [ContentBundle] {
-        ContentManager.shared.allContent()
+        contentManager.allContent()
     }
 
     /// Categories that have at least one content bundle.

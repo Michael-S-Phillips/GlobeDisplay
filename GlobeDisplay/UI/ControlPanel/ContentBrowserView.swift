@@ -6,6 +6,7 @@ import SwiftUI
 struct ContentBrowserView: View {
 
     @Environment(AppState.self) private var appState
+    @Environment(ContentManager.self) private var contentManager
     @Environment(\.renderEngine) private var renderEngine
 
     /// nil = show all content; non-nil = filter to that category.
@@ -13,7 +14,7 @@ struct ContentBrowserView: View {
     let title: String
 
     private var bundles: [ContentBundle] {
-        let all = ContentManager.shared.allContent()
+        let all = contentManager.allContent()
         guard let category else { return all }
         return all.filter { $0.category == category }
     }
@@ -75,7 +76,7 @@ struct ContentBrowserView: View {
 
     private func loadContent(_ bundle: ContentBundle) {
         // If the bundle is a downloadable catalog entry not yet available locally, block the load.
-        if bundle.assets.downloadURL != nil && !ContentManager.shared.isDownloaded(bundle.id) {
+        if bundle.assets.downloadURL != nil && !contentManager.isDownloaded(bundle.id) {
             if ContentDownloader.shared.downloadProgress[bundle.id] != nil {
                 status = .error("Extracting frames — please wait a moment.")
             } else {

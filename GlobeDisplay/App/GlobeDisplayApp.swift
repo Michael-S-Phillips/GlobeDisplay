@@ -17,6 +17,7 @@ struct GlobeDisplayApp: App {
                 if let engine = renderEngine {
                     ControlPanelView()
                         .environment(appState)
+                        .environment(ContentManager.shared)
                         .environment(\.renderEngine, engine)
                         .onAppear {
                             // Publish resources so ExternalDisplaySceneDelegate

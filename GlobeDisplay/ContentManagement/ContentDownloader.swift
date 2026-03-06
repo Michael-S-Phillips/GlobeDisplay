@@ -16,26 +16,26 @@ final class ContentDownloader: NSObject {
 
     // MARK: - State
 
-    /// Download progress for each bundle ID (0.0 – 1.0).
+    /// Download progress for each bundle ID (0.0 – 1.0). Observable — drives UI updates.
     private(set) var downloadProgress: [UUID: Double] = [:]
 
     /// Active download tasks keyed by bundle ID.
-    private var activeTasks: [UUID: URLSessionDownloadTask] = [:]
+    @ObservationIgnored private var activeTasks: [UUID: URLSessionDownloadTask] = [:]
 
     /// Resume data saved when a task is cancelled, keyed by bundle ID.
-    private var resumeData: [UUID: Data] = [:]
+    @ObservationIgnored private var resumeData: [UUID: Data] = [:]
 
     /// Original bundle metadata preserved during download, keyed by bundle ID.
-    private var pendingBundles: [UUID: ContentBundle] = [:]
+    @ObservationIgnored private var pendingBundles: [UUID: ContentBundle] = [:]
 
     // MARK: - Session
 
-    private lazy var session: URLSession = {
+    /// Background URLSession. @ObservationIgnored because lazy is incompatible with
+    /// the @Observable macro's computed-property transformation.
+    @ObservationIgnored private lazy var session: URLSession = {
         let config = URLSessionConfiguration.background(
             withIdentifier: "com.globedisplay.downloads"
         )
-        // URLSession delegate must be set at init time for background sessions.
-        // We use a trampoline so we can keep ContentDownloader @MainActor.
         return URLSession(
             configuration: config,
             delegate: SessionDelegate(owner: self),

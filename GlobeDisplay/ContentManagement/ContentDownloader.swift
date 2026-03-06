@@ -121,12 +121,24 @@ final class ContentDownloader: NSObject {
                         at: destination,
                         withIntermediateDirectories: true
                     )
+                    // Background URLSession temp files have no meaningful extension
+                    // (e.g. ".tmp"), so AVFoundation cannot identify the container
+                    // format. Move to a stable path with the correct extension first.
+                    let correctExt = downloadExt.isEmpty ? "mov" : downloadExt
+                    let videoSource = destination.appendingPathComponent("source.\(correctExt)")
+                    if FileManager.default.fileExists(atPath: videoSource.path) {
+                        try FileManager.default.removeItem(at: videoSource)
+                    }
+                    try FileManager.default.moveItem(at: location, to: videoSource)
+
                     let frameCount = try await VideoFrameExtractor.extractFrames(
-                        from: location,
+                        from: videoSource,
                         to: destination,
                         targetFPS: 5.0,
                         maxFrames: 120
                     )
+                    // Remove the source video now that frames are extracted.
+                    try? FileManager.default.removeItem(at: videoSource)
                     let updatedBundle = ContentBundle(
                         id: originalBundle?.id ?? id,
                         title: originalBundle?.title ?? "Animated Dataset",
@@ -148,9 +160,9 @@ final class ContentDownloader: NSObject {
                     }
                 } catch {
                     print("[ContentDownloader] Frame extraction failed for \(id): \(error.localizedDescription)")
+                    // Clean up on failure (success path removes the file above).
+                    try? FileManager.default.removeItem(at: location)
                 }
-                // Clean up the original video file to save space.
-                try? FileManager.default.removeItem(at: location)
                 await MainActor.run { [weak self] in
                     self?.activeTasks.removeValue(forKey: id)
                     self?.downloadProgress.removeValue(forKey: id)

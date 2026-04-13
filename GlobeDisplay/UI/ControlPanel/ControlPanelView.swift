@@ -270,9 +270,10 @@ private struct BottomToolbar: View {
             Button {
                 let newValue = !isOn
                 switch feedType {
-                case .earthquakes: appState.earthquakeOverlayEnabled = newValue
-                case .volcanoes:   appState.volcanoOverlayEnabled    = newValue
-                case .wildfires:   appState.wildfireOverlayEnabled   = newValue
+                case .earthquakes: appState.earthquakeOverlayEnabled  = newValue
+                case .volcanoes:   appState.volcanoOverlayEnabled     = newValue
+                case .wildfires:   appState.wildfireOverlayEnabled    = newValue
+                case .airQuality:  appState.airQualityOverlayEnabled  = newValue
                 }
                 if newValue {
                     DataFeedService.shared.startFeed(feedType, appState: appState)

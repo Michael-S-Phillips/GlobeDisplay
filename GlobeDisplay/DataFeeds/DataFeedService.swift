@@ -36,6 +36,7 @@ final class DataFeedService {
     private let earthquakeProvider = USGSEarthquakeProvider()
     private let volcanoProvider    = GVPVolcanoProvider()
     private let wildfireProvider   = GDACSWildfireProvider()
+    private let airQualityProvider = AirQualityProvider()
 
     // MARK: Active tasks
 
@@ -83,15 +84,17 @@ final class DataFeedService {
         case .earthquakes: return earthquakeProvider
         case .volcanoes:   return volcanoProvider
         case .wildfires:   return wildfireProvider
+        case .airQuality:  return airQualityProvider
         }
     }
 
     /// Writes normalized events back into the relevant `AppState` array.
     private func publish(events: [GeoEvent], for type: DataFeedType, to appState: AppState) {
         switch type {
-        case .earthquakes: appState.earthquakeEvents = events
-        case .volcanoes:   appState.volcanoEvents    = events
-        case .wildfires:   appState.wildfireEvents   = events
+        case .earthquakes: appState.earthquakeEvents  = events
+        case .volcanoes:   appState.volcanoEvents     = events
+        case .wildfires:   appState.wildfireEvents    = events
+        case .airQuality:  appState.airQualityEvents  = events
         }
     }
 

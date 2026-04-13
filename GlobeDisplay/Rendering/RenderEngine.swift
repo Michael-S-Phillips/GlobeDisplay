@@ -68,6 +68,12 @@ final class RenderEngine: NSObject {
     /// Avoids a nil check branch in every draw call.
     private var clearOverlayTexture: MTLTexture?
 
+    /// Cached rivers texture loaded from the bundled asset. Never deallocated once loaded.
+    private var cachedRiversTexture: MTLTexture?
+
+    /// Active rivers texture bound to texture slot 2. nil = not shown (uses clearOverlayTexture).
+    var riversTexture: MTLTexture?
+
     // MARK: - Init
 
     /// Private designated init satisfies NSObject's non-throwing init() requirement.
@@ -278,6 +284,36 @@ final class RenderEngine: NSObject {
 
         overlayTexture = privateTexture
     }
+
+    // MARK: - Rivers Texture
+
+    /// Loads rivers_2048x1024.png from the app bundle into a Metal texture.
+    /// Cached after the first load — subsequent calls are no-ops.
+    func loadRiversTexture() async {
+        if cachedRiversTexture != nil {
+            riversTexture = cachedRiversTexture
+            return
+        }
+        let loader = MTKTextureLoader(device: device)
+        let options: [MTKTextureLoader.Option: Any] = [
+            .textureUsage: MTLTextureUsage.shaderRead.rawValue,
+            .textureStorageMode: MTLStorageMode.private.rawValue,
+            .SRGB: false
+        ]
+        guard let texture = try? await loader.newTexture(name: "rivers_2048x1024",
+                                                         scaleFactor: 1.0,
+                                                         bundle: .main,
+                                                         options: options) else {
+            return
+        }
+        cachedRiversTexture = texture
+        riversTexture = texture
+    }
+
+    /// Hides the rivers overlay without discarding the cached texture.
+    func unloadRiversTexture() {
+        riversTexture = nil
+    }
 }
 
 // MARK: - MTKViewDelegate
@@ -310,6 +346,7 @@ extension RenderEngine: MTKViewDelegate {
             encoder.setFragmentTexture(texture, index: 0)
             // Use the live overlay texture, or fall back to the 1×1 clear placeholder.
             encoder.setFragmentTexture(overlayTexture ?? clearOverlayTexture, index: 1)
+            encoder.setFragmentTexture(riversTexture ?? clearOverlayTexture, index: 2)
             let aspect = Float(view.drawableSize.height / view.drawableSize.width)
             var uniforms = Uniforms(
                 rotationOffset: Float(MapProjection.normalizedRotation(rotationOffset)),

@@ -44,6 +44,7 @@ fragment float4 equirect_fragment(
     VertexOut in [[stage_in]],
     texture2d<float> baseTexture    [[texture(0)]],
     texture2d<float> overlayTexture [[texture(1)]],
+    texture2d<float> riversTexture  [[texture(2)]],
     constant Uniforms& uniforms [[buffer(0)]]
 ) {
     // The MagicPlanet uses polar azimuthal equidistant projection:
@@ -97,11 +98,12 @@ fragment float4 equirect_fragment(
 
     float2 uv = float2(lon, lat);
     float4 base    = baseTexture.sample(polarSampler, uv);
+    float4 rivers  = riversTexture.sample(polarSampler, uv);
     float4 overlay = overlayTexture.sample(overlaySampler, uv);
 
-    // Standard Porter-Duff "over" composite: overlay on top of base.
-    float3 composited = mix(base.rgb, overlay.rgb, overlay.a);
-    // Apply brightness (clamped to avoid over-saturation).
+    // Porter-Duff "over": base → rivers → overlay
+    float3 composited = mix(base.rgb, rivers.rgb, rivers.a);
+    composited        = mix(composited, overlay.rgb, overlay.a);
     composited = clamp(composited * uniforms.brightness, 0.0, 1.0);
     return float4(composited, 1.0);
 }

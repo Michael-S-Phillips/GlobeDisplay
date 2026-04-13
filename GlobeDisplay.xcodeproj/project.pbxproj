@@ -60,6 +60,12 @@
 		P3A100000000000000000006 /* DataFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F100000000000000000006 /* DataFeedService.swift */; };
 		P3A100000000000000000007 /* OverlayCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F100000000000000000007 /* OverlayCompositor.swift */; };
 		P3A100000000000000000008 /* OverlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F100000000000000000008 /* OverlayController.swift */; };
+		P3A100000000000000000009 /* AirQualityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F100000000000000000009 /* AirQualityProvider.swift */; };
+		P3A10000000000000000000A /* StaticOverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F10000000000000000000A /* StaticOverlayLayer.swift */; };
+		P3A10000000000000000000B /* DataFeedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F10000000000000000000B /* DataFeedModelTests.swift */; };
+		P3A10000000000000000000C /* StaticOverlayLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F10000000000000000000C /* StaticOverlayLayerTests.swift */; };
+		P3A10000000000000000000D /* AirQualityProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3F10000000000000000000D /* AirQualityProviderTests.swift */; };
+		P3R10000000000000000000E /* rivers_2048x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = P3F10000000000000000000E /* rivers_2048x1024.png */; };
 		VF01020304050607080900AB /* VideoFrameExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = VF01020304050607080900AC /* VideoFrameExtractor.swift */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +145,12 @@
 		P3F100000000000000000006 /* DataFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFeedService.swift; sourceTree = "<group>"; };
 		P3F100000000000000000007 /* OverlayCompositor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayCompositor.swift; sourceTree = "<group>"; };
 		P3F100000000000000000008 /* OverlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayController.swift; sourceTree = "<group>"; };
+		P3F100000000000000000009 /* AirQualityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirQualityProvider.swift; sourceTree = "<group>"; };
+		P3F10000000000000000000A /* StaticOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticOverlayLayer.swift; sourceTree = "<group>"; };
+		P3F10000000000000000000B /* DataFeedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFeedModelTests.swift; sourceTree = "<group>"; };
+		P3F10000000000000000000C /* StaticOverlayLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticOverlayLayerTests.swift; sourceTree = "<group>"; };
+		P3F10000000000000000000D /* AirQualityProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirQualityProviderTests.swift; sourceTree = "<group>"; };
+		P3F10000000000000000000E /* rivers_2048x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rivers_2048x1024.png; sourceTree = "<group>"; };
 		VF01020304050607080900AC /* VideoFrameExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFrameExtractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +195,7 @@
 				E16F950B088229A9D177BA41 /* EquirectangularShaders.metal */,
 				P3F100000000000000000007 /* OverlayCompositor.swift */,
 				A13A50F6646B3F4B8813D88F /* RenderEngine.swift */,
+				P3F10000000000000000000A /* StaticOverlayLayer.swift */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -271,6 +284,7 @@
 				669BAEF92AF27CC6003950BD /* moon.jpg */,
 				B1C2D3E4F5A601234567AA05 /* neptune.jpg */,
 				B1C2D3E4F5A601234567AA06 /* pluto.jpg */,
+				P3F10000000000000000000E /* rivers_2048x1024.png */,
 				B1C2D3E4F5A601234567AA03 /* saturn.jpg */,
 				B1C2D3E4F5A601234567AA04 /* uranus.jpg */,
 				B1C2D3E4F5A601234567AA01 /* venus.jpg */,
@@ -345,6 +359,9 @@
 				FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */,
 				C32151FCFBF3F3A98575389D /* DisplayCalibrationTests.swift */,
 				74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */,
+				P3F10000000000000000000B /* DataFeedModelTests.swift */,
+				P3F10000000000000000000C /* StaticOverlayLayerTests.swift */,
+				P3F10000000000000000000D /* AirQualityProviderTests.swift */,
 			);
 			path = GlobeDisplayTests;
 			sourceTree = "<group>";
@@ -352,6 +369,7 @@
 		P3G100000000000000000001 /* DataFeeds */ = {
 			isa = PBXGroup;
 			children = (
+				P3F100000000000000000009 /* AirQualityProvider.swift */,
 				P3F100000000000000000003 /* DataFeedProvider.swift */,
 				P3F100000000000000000006 /* DataFeedService.swift */,
 				P3F100000000000000000005 /* NASAEONETProvider.swift */,
@@ -470,6 +488,7 @@
 				989D4237A2054BC0C4EA649A /* moon.jpg in Resources */,
 				A1B2C3D4E5F601234567AA05 /* neptune.jpg in Resources */,
 				A1B2C3D4E5F601234567AA06 /* pluto.jpg in Resources */,
+				P3R10000000000000000000E /* rivers_2048x1024.png in Resources */,
 				A1B2C3D4E5F601234567AA03 /* saturn.jpg in Resources */,
 				A1B2C3D4E5F601234567AA04 /* uranus.jpg in Resources */,
 				A1B2C3D4E5F601234567AA01 /* venus.jpg in Resources */,
@@ -495,6 +514,9 @@
 				5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */,
 				A37E523B3B17E5A1023A6904 /* DisplayCalibrationTests.swift in Sources */,
 				574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */,
+				P3A10000000000000000000B /* DataFeedModelTests.swift in Sources */,
+				P3A10000000000000000000C /* StaticOverlayLayerTests.swift in Sources */,
+				P3A10000000000000000000D /* AirQualityProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +560,8 @@
 				P3A100000000000000000006 /* DataFeedService.swift in Sources */,
 				P3A100000000000000000007 /* OverlayCompositor.swift in Sources */,
 				P3A100000000000000000008 /* OverlayController.swift in Sources */,
+				P3A100000000000000000009 /* AirQualityProvider.swift in Sources */,
+				P3A10000000000000000000A /* StaticOverlayLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

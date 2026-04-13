@@ -26,9 +26,10 @@ final class OverlayCompositor {
     func renderOverlay(
         earthquakes: [GeoEvent],
         volcanoes: [GeoEvent],
-        wildfires: [GeoEvent]
+        wildfires: [GeoEvent],
+        airQuality: [GeoEvent]
     ) -> CGImage? {
-        guard !earthquakes.isEmpty || !volcanoes.isEmpty || !wildfires.isEmpty else {
+        guard !earthquakes.isEmpty || !volcanoes.isEmpty || !wildfires.isEmpty || !airQuality.isEmpty else {
             return nil
         }
 
@@ -56,6 +57,7 @@ final class OverlayCompositor {
         drawEarthquakes(earthquakes, in: context)
         drawVolcanoes(volcanoes, in: context)
         drawWildfires(wildfires, in: context)
+        drawAirQuality(airQuality, in: context)
 
         return context.makeImage()
     }
@@ -74,17 +76,44 @@ final class OverlayCompositor {
             let radius = min(rawRadius, 30.0)
 
             let age = now.timeIntervalSince(event.timestamp)
-            let (r, g, b, a): (CGFloat, CGFloat, CGFloat, CGFloat)
+            let (r, g, b, ageAlpha): (CGFloat, CGFloat, CGFloat, CGFloat)
             if age <= 3600 {           // within 1 hour — red
-                (r, g, b, a) = (1.0, 0.1, 0.1, 0.8)
+                (r, g, b, ageAlpha) = (1.0, 0.1, 0.1, 0.8)
             } else if age <= 21600 {   // within 6 hours — orange
-                (r, g, b, a) = (1.0, 0.5, 0.0, 0.7)
+                (r, g, b, ageAlpha) = (1.0, 0.5, 0.0, 0.7)
             } else {                   // older — yellow
-                (r, g, b, a) = (1.0, 0.9, 0.0, 0.6)
+                (r, g, b, ageAlpha) = (1.0, 0.9, 0.0, 0.6)
             }
+
+            // Depth classification
+            let depthAlphaMultiplier: CGFloat
+            let isShallow: Bool
+            if let depth = event.depth {
+                if depth < 70 {
+                    depthAlphaMultiplier = 1.0
+                    isShallow = true
+                } else if depth < 300 {
+                    depthAlphaMultiplier = 0.75
+                    isShallow = false
+                } else {
+                    depthAlphaMultiplier = 0.50
+                    isShallow = false
+                }
+            } else {
+                // nil depth treated as shallow
+                depthAlphaMultiplier = 1.0
+                isShallow = true
+            }
+
+            let a = ageAlpha * depthAlphaMultiplier
 
             drawFilledCircle(at: pixel, radius: radius, r: r, g: g, b: b, alpha: a, in: context)
             drawStrokeRing(at: pixel, radius: radius + 1, lineWidth: 1.5, r: 1, g: 1, b: 1, alpha: 1, in: context)
+
+            // Shallow quake indicator: extra outer ring
+            if isShallow {
+                drawStrokeRing(at: pixel, radius: radius + 4, lineWidth: 1.5, r: 1, g: 1, b: 1, alpha: 0.6, in: context)
+            }
 
             // Anti-dateline wrap: mirror point when near ±180° longitude.
             if let mirroredLon = dateline_mirrorLongitude(event.longitude) {
@@ -95,6 +124,11 @@ final class OverlayCompositor {
                 )
                 drawFilledCircle(at: mirrorPixel, radius: radius, r: r, g: g, b: b, alpha: a, in: context)
                 drawStrokeRing(at: mirrorPixel, radius: radius + 1, lineWidth: 1.5, r: 1, g: 1, b: 1, alpha: 1, in: context)
+
+                // Shallow quake indicator on mirror: extra outer ring
+                if isShallow {
+                    drawStrokeRing(at: mirrorPixel, radius: radius + 4, lineWidth: 1.5, r: 1, g: 1, b: 1, alpha: 0.6, in: context)
+                }
             }
         }
     }
@@ -135,6 +169,43 @@ final class OverlayCompositor {
                     in: canvasSize
                 )
                 drawFilledCircle(at: mirrorPixel, radius: 8, r: 1.0, g: 0.4, b: 0.0, alpha: 0.75, in: context)
+            }
+        }
+    }
+
+    private func drawAirQuality(_ events: [GeoEvent], in context: CGContext) {
+        for event in events {
+            let pixel = MapProjection.toPixel(
+                latitude: event.latitude,
+                longitude: event.longitude,
+                in: canvasSize
+            )
+
+            let aqi = event.magnitude ?? 0
+            let (r, g, b): (CGFloat, CGFloat, CGFloat)
+            if aqi < 51 {
+                (r, g, b) = (0.0, 0.8, 0.2)   // Good
+            } else if aqi < 101 {
+                (r, g, b) = (1.0, 0.9, 0.0)   // Moderate
+            } else if aqi < 151 {
+                (r, g, b) = (1.0, 0.5, 0.0)   // Unhealthy for sensitive groups
+            } else if aqi < 201 {
+                (r, g, b) = (1.0, 0.1, 0.1)   // Unhealthy
+            } else {
+                (r, g, b) = (0.6, 0.0, 0.0)   // Very Unhealthy / Hazardous
+            }
+
+            drawFilledCircle(at: pixel, radius: 12, r: r, g: g, b: b, alpha: 0.75, in: context)
+            drawStrokeRing(at: pixel, radius: 13, lineWidth: 1.5, r: 1, g: 1, b: 1, alpha: 1, in: context)
+
+            if let mirroredLon = dateline_mirrorLongitude(event.longitude) {
+                let mirrorPixel = MapProjection.toPixel(
+                    latitude: event.latitude,
+                    longitude: mirroredLon,
+                    in: canvasSize
+                )
+                drawFilledCircle(at: mirrorPixel, radius: 12, r: r, g: g, b: b, alpha: 0.75, in: context)
+                drawStrokeRing(at: mirrorPixel, radius: 13, lineWidth: 1.5, r: 1, g: 1, b: 1, alpha: 1, in: context)
             }
         }
     }

@@ -98,6 +98,10 @@ struct ContentBrowserView: View {
         appState.activeAnimationSequencer = nil
         engine.animationSequencer = nil
 
+        // Stop any running video before loading new content.
+        engine.videoController?.stop()
+        engine.videoController = nil
+
         status = .loading(bundle.title)
 
         switch bundle.contentType {
@@ -140,7 +144,7 @@ struct ContentBrowserView: View {
                 }
             }
 
-        case .staticImage, .video:
+        case .staticImage:
             Task {
                 do {
                     let image = try ContentManager.shared.loadCGImage(for: bundle)
@@ -150,6 +154,29 @@ struct ContentBrowserView: View {
                     status = .error(error.localizedDescription)
                 }
             }
+
+        case .video:
+            guard let videoName = bundle.assets.videoPath else {
+                status = .error("No video file specified for \(bundle.title)")
+                return
+            }
+            // Resolve the video file the same way sequences resolve their directory:
+            // absolute path (downloaded), then app bundle, then Documents.
+            let url: URL
+            if videoName.hasPrefix("/") {
+                url = URL(fileURLWithPath: videoName)
+            } else if let bundleURL = Bundle.main.url(forResource: videoName, withExtension: nil) {
+                url = bundleURL
+            } else {
+                url = FileManager.default
+                    .urls(for: .documentDirectory, in: .userDomainMask)[0]
+                    .appendingPathComponent(videoName)
+            }
+            let controller = VideoPlaybackController(device: engine.device)
+            controller.load(url: url)
+            controller.play()
+            engine.videoController = controller
+            status = .ready(bundle.title)
         }
     }
 }

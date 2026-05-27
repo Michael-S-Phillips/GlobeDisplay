@@ -1,6 +1,7 @@
 import Metal
 import MetalKit
 import CoreGraphics
+import QuartzCore
 
 // Matches the Uniforms struct in EquirectangularShaders.metal exactly.
 private struct Uniforms {
@@ -11,6 +12,7 @@ private struct Uniforms {
     var brightness: Float       // output multiplier, default 1.0
     var flipHorizontal: Float   // 1.0 = mirror east/west
     var flipVertical: Float     // 1.0 = flip north/south
+    var transitionProgress: Float // 0 = previous base, 1 = new base
 }
 
 enum RenderEngineError: Error {
@@ -36,10 +38,25 @@ final class RenderEngine: NSObject {
     let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private var pipelineState: MTLRenderPipelineState?
-    private var baseTexture: MTLTexture?
+    var baseTexture: MTLTexture?
 
     /// Longitude rotation in degrees (0–360). Updated in real time from the UI slider.
     var rotationOffset: Double = 0.0
+
+    /// Continuous spin speed in degrees/second. Sign encodes direction. 0 = off.
+    var autoRotationSpeed: Double = 0.0
+
+    /// Timestamp of the previous rendered frame, used to compute spin/transition delta-time.
+    private var lastFrameTimestamp: CFTimeInterval?
+
+    /// Outgoing base texture retained during a crossfade. nil when not transitioning.
+    private var prevBaseTexture: MTLTexture?
+
+    /// Crossfade progress 0→1. 1.0 means the transition is complete (show new base only).
+    private var transitionProgress: Double = 1.0
+
+    /// Crossfade duration in seconds when switching base maps. 0 = instant swap.
+    var transitionDuration: Double = 0.6
 
     /// Fisheye projection correction exponent. 1 = equidistant, 2 = equisolid.
     /// Tune this slider until latitude rings appear horizontal on the globe.
@@ -59,6 +76,9 @@ final class RenderEngine: NSObject {
 
     /// Retains the active AnimationSequencer so its lifecycle is tied to the engine.
     var animationSequencer: AnimationSequencer?
+
+    /// Active real-time video playback. Mutually exclusive with animationSequencer.
+    var videoController: VideoPlaybackController?
 
     /// Overlay texture (RGBA, transparent background) composited over the base map.
     /// Set to nil to disable overlay blending.
@@ -143,7 +163,21 @@ final class RenderEngine: NSObject {
             .textureStorageMode: MTLStorageMode.private.rawValue,
             .SRGB: false
         ]
-        baseTexture = try await loader.newTexture(cgImage: image, options: options)
+        let texture = try await loader.newTexture(cgImage: image, options: options)
+        setBaseTexture(texture, animated: true)
+    }
+
+    /// Swaps the base texture, optionally crossfading from the outgoing one.
+    /// Animation/video frame updates assign `baseTexture` directly to bypass the fade.
+    func setBaseTexture(_ texture: MTLTexture?, animated: Bool) {
+        if animated, transitionDuration > 0, let current = baseTexture {
+            prevBaseTexture = current
+            transitionProgress = 0.0
+        } else {
+            prevBaseTexture = nil
+            transitionProgress = 1.0
+        }
+        baseTexture = texture
     }
 
     // MARK: - Animation Frame Update
@@ -325,12 +359,30 @@ extension RenderEngine: MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
+        // Pull the latest decoded video frame into the base texture, if a video is active.
+        videoController?.copyCurrentFrame(to: self)
+
         guard
             let pipelineState,
             let drawable = view.currentDrawable,
             let renderPassDescriptor = view.currentRenderPassDescriptor,
             let commandBuffer = commandQueue.makeCommandBuffer()
         else { return }
+
+        // Advance continuous spin using real elapsed time so speed is frame-rate independent.
+        let now = CACurrentMediaTime()
+        if autoRotationSpeed != 0, let last = lastFrameTimestamp {
+            rotationOffset = MapProjection.advanceRotation(
+                rotationOffset, speedDegPerSec: autoRotationSpeed, dt: now - last
+            )
+        }
+        if transitionProgress < 1.0, let last = lastFrameTimestamp {
+            transitionProgress = MapProjection.advanceTransition(
+                transitionProgress, dt: now - last, duration: transitionDuration
+            )
+            if transitionProgress >= 1.0 { prevBaseTexture = nil }
+        }
+        lastFrameTimestamp = now
 
         // Configure the descriptor before creating the encoder — mutations after
         // makeRenderCommandEncoder(descriptor:) are silently ignored by Metal.
@@ -347,6 +399,7 @@ extension RenderEngine: MTKViewDelegate {
             // Use the live overlay texture, or fall back to the 1×1 clear placeholder.
             encoder.setFragmentTexture(overlayTexture ?? clearOverlayTexture, index: 1)
             encoder.setFragmentTexture(riversTexture ?? clearOverlayTexture, index: 2)
+            encoder.setFragmentTexture(prevBaseTexture ?? clearOverlayTexture, index: 3)
             let aspect = Float(view.drawableSize.height / view.drawableSize.width)
             var uniforms = Uniforms(
                 rotationOffset: Float(MapProjection.normalizedRotation(rotationOffset)),
@@ -355,7 +408,8 @@ extension RenderEngine: MTKViewDelegate {
                 projectionRadius: Float(projectionRadius),
                 brightness: Float(brightness),
                 flipHorizontal: flipHorizontal ? 1.0 : 0.0,
-                flipVertical: flipVertical ? 1.0 : 0.0
+                flipVertical: flipVertical ? 1.0 : 0.0,
+                transitionProgress: Float(transitionProgress)
             )
             encoder.setFragmentBytes(&uniforms, length: MemoryLayout<Uniforms>.size, index: 0)
             encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)

@@ -40,4 +40,9 @@ final class AppState {
     // MARK: - Animation playback
     var animationPlaybackRate: Double = 1.0
     var activeAnimationSequencer: AnimationSequencer?
+
+    // MARK: - Motion
+    var autoRotationEnabled: Bool = false
+    var autoRotationSpeed: Double = 6.0     // degrees/sec when enabled (range 1–30)
+    var transitionDuration: Double = 0.6    // crossfade seconds, 0 disables
 }

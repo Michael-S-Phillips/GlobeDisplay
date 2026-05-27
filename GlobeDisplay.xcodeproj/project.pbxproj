@@ -14,15 +14,18 @@
 		0669660D89121D9A6F91B59C /* OverlayCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1A3AA7C59C097F00FE2EE5 /* OverlayCompositor.swift */; };
 		0C378027CF4BE25711D9A52D /* blue_marble.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F907540F5ED70EE6B9677996 /* blue_marble.jpg */; };
 		0D24867CED1D9213F57B1D9A /* VideoFrameExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F0C0DED236DCE47E06B367 /* VideoFrameExtractor.swift */; };
+		0F4B4B1E0D78A2C68DE9313A /* VideoPlaybackControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD03BE1482637172A1081E /* VideoPlaybackControllerTests.swift */; };
 		12E8945DA5E734F3CA7B2DB9 /* DataFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37447F74676C3A0E269DECF7 /* DataFeed.swift */; };
 		13687A638D11228772A43506 /* neptune.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF294168D66B30189CAC8328 /* neptune.jpg */; };
 		201F62673C5E0266FA4018EF /* StoryPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA36D9EB41B827B92DF658C0 /* StoryPlayerView.swift */; };
 		2329B29F3997D4CBCB9D8AC1 /* ContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */; };
+		26FE2A5DA982100B82AC3559 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0100EBCDEC638AC9764244A8 /* PrivacyInfo.xcprivacy */; };
 		2E775E943078163F8585605C /* saturn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07BE9C830B6C35E534C862BF /* saturn.jpg */; };
 		35C26F82C8EACB8298ADDA2F /* ControlPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE3B9D6EBC9033EF2BB8BE7 /* ControlPanelView.swift */; };
 		3BF2825E2F4B1C4161692DF0 /* jupiter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87FBA9D90DE9E2E325DF48D6 /* jupiter.jpg */; };
 		4F6B7525614D3D132943110C /* earth_clouds.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97C593ADC7368F2F02009 /* earth_clouds.jpg */; };
 		4FD0FBEA4E0CEEDD1F2B3BE1 /* USGSEarthquakeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6505AA8303EDE58780DAA2D /* USGSEarthquakeProvider.swift */; };
+		503BF6AC548F30EBDE1D7762 /* VideoPlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B847750833CF51A2D3D3E7 /* VideoPlaybackController.swift */; };
 		532DF8DECC7F756FE8050846 /* MapProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FE55E475607DDBAF387C24 /* MapProjection.swift */; };
 		55E981C48D12132CBD1D6A8A /* RenderEngineKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9AD62A7D66A0067485E088 /* RenderEngineKey.swift */; };
 		574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */; };
@@ -41,7 +44,10 @@
 		7B4435662F787CCAB38DF650 /* uranus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5743352306B8C1005493DAF /* uranus.jpg */; };
 		7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7517B787A111441E6FD34CF /* GlobeOutputView.swift */; };
 		834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */; };
+		869BFE77C8E041B4387CF4E1 /* AnimationSequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */; };
+		8948F2322538BB83A3A3167F /* MotionMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F2B50A66EC94F939AD15D5 /* MotionMathTests.swift */; };
 		8EA3DF2BB12412956BC7D080 /* venus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 445ACD0C3EC97EA528027264 /* venus.jpg */; };
+		8F7613AC4C261A628A622438 /* PlaybackControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744C1ABFE65CE6318C1AD11F /* PlaybackControlsView.swift */; };
 		9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */; };
 		97DA0418D5CBD6A6FEFA44D7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C549AFF55AA149B3698993C7 /* mars.jpg */; };
 		989D4237A2054BC0C4EA649A /* moon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 669BAEF92AF27CC6003950BD /* moon.jpg */; };
@@ -87,6 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0100EBCDEC638AC9764244A8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		07BE9C830B6C35E534C862BF /* saturn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = saturn.jpg; sourceTree = "<group>"; };
 		11A1C6A40EC426DDD1239DD1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		11F0C0DED236DCE47E06B367 /* VideoFrameExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFrameExtractor.swift; sourceTree = "<group>"; };
@@ -95,6 +102,7 @@
 		20935DA0D8C0D0794D120838 /* StoryLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryLibrary.swift; sourceTree = "<group>"; };
 		26C8FD669A99D0F8DA1A2D50 /* SharedAppResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedAppResources.swift; sourceTree = "<group>"; };
 		285FEC5239387C7E49ABEE9F /* GeoEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoEvent.swift; sourceTree = "<group>"; };
+		28F2B50A66EC94F939AD15D5 /* MotionMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionMathTests.swift; sourceTree = "<group>"; };
 		2957F0ED262A745F55071427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		37447F74676C3A0E269DECF7 /* DataFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFeed.swift; sourceTree = "<group>"; };
 		3E9AD62A7D66A0067485E088 /* RenderEngineKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEngineKey.swift; sourceTree = "<group>"; };
@@ -112,12 +120,15 @@
 		68B5E8109F795F0320DFDC53 /* earth_topo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_topo.jpg; sourceTree = "<group>"; };
 		6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		72C8BAD5881D6C151863D577 /* AirQualityProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirQualityProviderTests.swift; sourceTree = "<group>"; };
+		744C1ABFE65CE6318C1AD11F /* PlaybackControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlsView.swift; sourceTree = "<group>"; };
 		74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjectionTests.swift; sourceTree = "<group>"; };
 		788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlobeDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationSequencerTests.swift; sourceTree = "<group>"; };
 		7C2BEC263B67DAD983912AC0 /* StaticOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticOverlayLayer.swift; sourceTree = "<group>"; };
 		805012810FE0F9A38DC4E548 /* DataLegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLegendView.swift; sourceTree = "<group>"; };
 		8130E7A5182E1FD2A5A94B74 /* AnimationSequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationSequencer.swift; sourceTree = "<group>"; };
 		87FBA9D90DE9E2E325DF48D6 /* jupiter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jupiter.jpg; sourceTree = "<group>"; };
+		88B847750833CF51A2D3D3E7 /* VideoPlaybackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaybackController.swift; sourceTree = "<group>"; };
 		96C80C15FB8A9496DF24491D /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		9A88F6563220EC85315ACE89 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		A13A50F6646B3F4B8813D88F /* RenderEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEngine.swift; sourceTree = "<group>"; };
@@ -134,6 +145,7 @@
 		C549AFF55AA149B3698993C7 /* mars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mars.jpg; sourceTree = "<group>"; };
 		C7517B787A111441E6FD34CF /* GlobeOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeOutputView.swift; sourceTree = "<group>"; };
 		C921EF1D7C9F5F990F836880 /* ContentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCard.swift; sourceTree = "<group>"; };
+		CBCD03BE1482637172A1081E /* VideoPlaybackControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaybackControllerTests.swift; sourceTree = "<group>"; };
 		D167D283104F49C66765C8CA /* earth_night.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_night.jpg; sourceTree = "<group>"; };
 		D1F3082D1C0C63284D7E98B5 /* BundleParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleParser.swift; sourceTree = "<group>"; };
 		D1FE55E475607DDBAF387C24 /* MapProjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjection.swift; sourceTree = "<group>"; };
@@ -204,6 +216,7 @@
 				BC1A3AA7C59C097F00FE2EE5 /* OverlayCompositor.swift */,
 				A13A50F6646B3F4B8813D88F /* RenderEngine.swift */,
 				7C2BEC263B67DAD983912AC0 /* StaticOverlayLayer.swift */,
+				88B847750833CF51A2D3D3E7 /* VideoPlaybackController.swift */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -331,6 +344,7 @@
 			children = (
 				51DA5E06390BD51813967302 /* ContentBrowserView.swift */,
 				AEE3B9D6EBC9033EF2BB8BE7 /* ControlPanelView.swift */,
+				744C1ABFE65CE6318C1AD11F /* PlaybackControlsView.swift */,
 			);
 			path = ControlPanel;
 			sourceTree = "<group>";
@@ -360,6 +374,7 @@
 				32BBFCA333E8767923653560 /* UI */,
 				B6D9C1DA2A7D471F7A58D16C /* Utilities */,
 				2957F0ED262A745F55071427 /* Info.plist */,
+				0100EBCDEC638AC9764244A8 /* PrivacyInfo.xcprivacy */,
 			);
 			path = GlobeDisplay;
 			sourceTree = "<group>";
@@ -369,11 +384,14 @@
 			children = (
 				6A92A10849F713963CC72538 /* TestFixtures */,
 				72C8BAD5881D6C151863D577 /* AirQualityProviderTests.swift */,
+				7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */,
 				FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */,
 				A3E4972F6AB5CDF7C4E7CDDC /* DataFeedModelTests.swift */,
 				C32151FCFBF3F3A98575389D /* DisplayCalibrationTests.swift */,
 				74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */,
+				28F2B50A66EC94F939AD15D5 /* MotionMathTests.swift */,
 				5B2D3769CC1909841E1C5B28 /* StaticOverlayLayerTests.swift */,
+				CBCD03BE1482637172A1081E /* VideoPlaybackControllerTests.swift */,
 			);
 			path = GlobeDisplayTests;
 			sourceTree = "<group>";
@@ -449,6 +467,7 @@
 						TestTargetID = C708ED5EF88B805A49324A65;
 					};
 					C708ED5EF88B805A49324A65 = {
+						DevelopmentTeam = K7M2M2864C;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -480,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18AD1C043D0E39F6B9A50C8 /* Assets.xcassets in Resources */,
+				26FE2A5DA982100B82AC3559 /* PrivacyInfo.xcprivacy in Resources */,
 				0C378027CF4BE25711D9A52D /* blue_marble.jpg in Resources */,
 				4F6B7525614D3D132943110C /* earth_clouds.jpg in Resources */,
 				D064405188AAE1FD34D829F9 /* earth_night.jpg in Resources */,
@@ -513,11 +533,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1CB07545929B27B08CA9348 /* AirQualityProviderTests.swift in Sources */,
+				869BFE77C8E041B4387CF4E1 /* AnimationSequencerTests.swift in Sources */,
 				5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */,
 				624528C006B4F008A02BA8BE /* DataFeedModelTests.swift in Sources */,
 				A37E523B3B17E5A1023A6904 /* DisplayCalibrationTests.swift in Sources */,
 				574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */,
+				8948F2322538BB83A3A3167F /* MotionMathTests.swift in Sources */,
 				010FF65360275A3B938F3824 /* StaticOverlayLayerTests.swift in Sources */,
+				0F4B4B1E0D78A2C68DE9313A /* VideoPlaybackControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +576,7 @@
 				0669660D89121D9A6F91B59C /* OverlayCompositor.swift in Sources */,
 				5B8BA8FE0328325063066350 /* OverlayController.swift in Sources */,
 				9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */,
+				8F7613AC4C261A628A622438 /* PlaybackControlsView.swift in Sources */,
 				D85241658422813F4BA786CF /* RenderEngine.swift in Sources */,
 				55E981C48D12132CBD1D6A8A /* RenderEngineKey.swift in Sources */,
 				CC7E572A322E37890EF3F5C0 /* SettingsView.swift in Sources */,
@@ -563,6 +587,7 @@
 				201F62673C5E0266FA4018EF /* StoryPlayerView.swift in Sources */,
 				4FD0FBEA4E0CEEDD1F2B3BE1 /* USGSEarthquakeProvider.swift in Sources */,
 				0D24867CED1D9213F57B1D9A /* VideoFrameExtractor.swift in Sources */,
+				503BF6AC548F30EBDE1D7762 /* VideoPlaybackController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +763,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K7M2M2864C;
 				INFOPLIST_FILE = GlobeDisplay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -774,6 +800,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = K7M2M2864C;
 				INFOPLIST_FILE = GlobeDisplay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (

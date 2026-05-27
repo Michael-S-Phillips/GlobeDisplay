@@ -16,6 +16,13 @@ enum AnimationSequencerError: Error, LocalizedError {
     }
 }
 
+/// How an image sequence advances when it reaches an end.
+enum PlaybackMode: String, CaseIterable, Sendable {
+    case loop      // wrap to the start
+    case once      // stop at the final frame
+    case pingPong  // bounce between ends
+}
+
 /// Drives image-sequence animation by pushing CGImage frames to RenderEngine on a timer.
 ///
 /// Load a directory of numbered frames (e.g. 0001.png, 0002.png, …), then call
@@ -27,6 +34,9 @@ final class AnimationSequencer {
 
     /// Frames per second for playback. Change before calling play(engine:).
     var framerate: Double = 15.0
+
+    /// What happens when playback reaches an end. Default loops (legacy behavior).
+    var playbackMode: PlaybackMode = .loop
 
     /// True while the internal timer is running.
     var isPlaying: Bool { animationTask != nil }
@@ -40,6 +50,9 @@ final class AnimationSequencer {
     // MARK: - Private state
 
     private var frames: [CGImage] = []
+
+    /// Playback direction: +1 forward, -1 reverse. Only changes in .pingPong mode.
+    private var direction: Int = 1
 
     /// A long-lived Task that drives the frame loop.
     private var animationTask: Task<Void, Never>?
@@ -112,7 +125,13 @@ final class AnimationSequencer {
                     // Non-fatal: skip the frame and continue.
                 }
 
-                self.currentFrameIndex = (self.currentFrameIndex + 1) % self.frameCount
+                let r = AnimationSequencer.step(
+                    from: self.currentFrameIndex, count: self.frameCount,
+                    direction: self.direction, mode: self.playbackMode
+                )
+                self.currentFrameIndex = r.next
+                self.direction = r.direction
+                if r.finished { self.pause(); break }
 
                 do {
                     try await Task.sleep(for: frameDuration)
@@ -135,4 +154,53 @@ final class AnimationSequencer {
         pause()
         currentFrameIndex = 0
     }
+
+    // MARK: - Frame stepping & seeking
+
+    /// Computes the next frame index given the current position and playback mode.
+    /// Pure and nonisolated so it can be unit-tested without a render engine.
+    nonisolated static func step(
+        from index: Int, count: Int, direction: Int, mode: PlaybackMode
+    ) -> (next: Int, direction: Int, finished: Bool) {
+        guard count > 1 else { return (index, direction, mode == .once) }
+        switch mode {
+        case .loop:
+            return ((index + 1) % count, direction, false)
+        case .once:
+            return index + 1 >= count ? (index, direction, true) : (index + 1, direction, false)
+        case .pingPong:
+            let tentative = index + direction
+            if tentative >= count { return (count - 2, -1, false) }
+            if tentative < 0 { return (1, 1, false) }
+            return (tentative, direction, false)
+        }
+    }
+
+    /// Moves the playhead to a fractional position (0...1). Valid while playing or paused.
+    func seek(toProgress progress: Double) {
+        guard frameCount > 1 else { currentFrameIndex = 0; return }
+        let clamped = min(max(progress, 0.0), 1.0)
+        currentFrameIndex = Int((Double(frameCount - 1) * clamped).rounded())
+    }
+
+    /// Current playhead position as a fraction (0...1).
+    var progress: Double {
+        frameCount > 1 ? Double(currentFrameIndex) / Double(frameCount - 1) : 0.0
+    }
+
+    #if DEBUG
+    /// Test seam: populate `frameCount` without decoding real images.
+    func setFramesForTesting(count: Int) {
+        frames = Array(repeating: AnimationSequencer.blankFrame(), count: count)
+        frameCount = count
+        currentFrameIndex = 0
+    }
+
+    nonisolated private static func blankFrame() -> CGImage {
+        let ctx = CGContext(data: nil, width: 1, height: 1, bitsPerComponent: 8,
+                            bytesPerRow: 4, space: CGColorSpaceCreateDeviceRGB(),
+                            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        return ctx.makeImage()!
+    }
+    #endif
 }

@@ -455,21 +455,22 @@ Expected: `** TEST SUCCEEDED **`.
 
 - [ ] **Step 5: Add `transitionProgress` to the shader Uniforms and mix previous base**
 
-In `EquirectangularShaders.metal`, add to the `Uniforms` struct (after `flipVertical`):
+IMPORTANT (post-Shahnab): the merged shader has a rivers texture occupying a texture index beyond `overlayTexture [[texture(1)]]`. Before editing, read the current `EquirectangularShaders.metal` and `RenderEngine.swift` `Uniforms`/`draw(in:)` to find the next FREE texture index, and use it for the previous-base texture (do NOT assume index 2). Keep the Swift `Uniforms` struct field order identical to the metal struct.
+
+In `EquirectangularShaders.metal`, add to the `Uniforms` struct (append after the last field, e.g. `flipVertical` plus any Shahnab-added fields):
 ```metal
 float transitionProgress; // 0 = show previous base, 1 = show new base
 ```
-Add a third texture parameter to the fragment function signature (previous base at index 2), e.g.:
+Add a previous-base texture parameter at the next free index N (verified from the merged shader), e.g.:
 ```metal
-texture2d<float> prevBaseTex [[texture(2)]],
+texture2d<float> prevBaseTexture [[texture(N)]],
 ```
-Where the base color is sampled, blend with the previous base before applying overlay/brightness:
+The shader already declares `float4 base = baseTexture.sample(polarSampler, uv);` (around line 99). Immediately after it, blend with the previous base:
 ```metal
-float4 newBase  = baseTex.sample(s, uv);
-float4 prevBase = prevBaseTex.sample(s, uv);
-float4 base = mix(prevBase, newBase, uniforms.transitionProgress);
+float4 prevBase = prevBaseTexture.sample(polarSampler, uv);
+base = mix(prevBase, base, uniforms.transitionProgress);
 ```
-(Use the existing sampler and `uv` variable names already present in the shader.)
+(Reuse the existing `polarSampler` and `uv` variables.)
 
 - [ ] **Step 6: Mirror the uniform in RenderEngine and add the crossfade path**
 
@@ -520,11 +521,11 @@ if transitionProgress < 1.0, let last = lastFrameTimestamp {
 ```
 (Note: `now`/`lastFrameTimestamp` are set by the Task 2 block; keep this block after it.)
 
-Bind the previous base texture and pass the uniform. Where `index: 1` overlay is bound, add:
+Bind the previous base texture at the same free index N used in the shader (Step 5), and pass the uniform. After the existing texture bindings, add:
 ```swift
-encoder.setFragmentTexture(prevBaseTexture ?? clearOverlayTexture, index: 2)
+encoder.setFragmentTexture(prevBaseTexture ?? clearOverlayTexture, index: N)
 ```
-And add `transitionProgress: Float(transitionProgress)` to the `Uniforms(...)` initializer.
+And add `transitionProgress: Float(transitionProgress)` to the `Uniforms(...)` initializer (in the same field position as the metal struct).
 
 - [ ] **Step 7: Add `transitionDuration` to AppState**
 
@@ -765,7 +766,7 @@ engine.videoController = nil
 Split `.video` out of the combined `case .staticImage, .video:`. Keep `.staticImage` as-is, and add a dedicated `.video` case:
 ```swift
 case .video:
-    guard let videoName = bundle.assets.videoFile else {
+    guard let videoName = bundle.assets.videoPath else {
         status = .error("No video file specified for \(bundle.title)")
         return
     }
@@ -786,7 +787,7 @@ case .video:
     status = .ready(bundle.title)
 ```
 
-Verify the asset property name: check `ContentAssets` in `GlobeDisplay/Models/ContentBundle.swift` for the video path field. If it is not `videoFile`, use the actual property name (e.g. `videoPath`). Adjust the code above to match.
+VERIFIED: the asset property is `bundle.assets.videoPath` (`ContentBundle.swift:65`). Use `videoPath` for `videoName` above.
 
 - [ ] **Step 3: Build to confirm it compiles**
 
@@ -937,22 +938,24 @@ Delete the now-unused `animationSpeedSlider` computed property. Keep the existin
 
 - [ ] **Step 3: Add the transition-duration control to Settings**
 
-In `DisplaySettingsView.swift`, add a slider bound to `appState.transitionDuration` (range 0...1.5, step 0.1) with an `.onChange` that sets `renderEngine?.transitionDuration = newValue`. Match the existing slider rows in that view (label, `Slider`, accessibility). Example row:
+VERIFIED: there is no `DisplaySettingsView.swift`. Edit `GlobeDisplay/UI/Settings/SettingsView.swift` and add the control to `displaySection` (it already reads `@Environment(\.renderEngine)` and uses `@Bindable var state = appState`). Insert this row after the Brightness `VStack`:
 ```swift
-@Bindable var state = appState
-Slider(value: $state.transitionDuration, in: 0...1.5, step: 0.1) {
-    Text("Transition duration")
-} minimumValueLabel: {
-    Text("Off").font(.caption2)
-} maximumValueLabel: {
-    Text("1.5s").font(.caption2)
+VStack(alignment: .leading, spacing: 4) {
+    HStack {
+        Label("Transition", systemImage: "rectangle.2.swap")
+        Spacer()
+        Text(appState.transitionDuration == 0 ? "Off" : String(format: "%.1fs", appState.transitionDuration))
+            .foregroundStyle(.secondary).font(.callout).monospacedDigit()
+    }
+    Slider(value: $state.transitionDuration, in: 0...1.5, step: 0.1)
+        .onChange(of: appState.transitionDuration) { _, v in
+            renderEngine?.transitionDuration = v
+        }
 }
-.onChange(of: appState.transitionDuration) { _, newValue in
-    renderEngine?.transitionDuration = newValue
-}
+.accessibilityElement(children: .combine)
 .accessibilityLabel("Crossfade transition duration")
 ```
-(If `DisplaySettingsView` does not already read `renderEngine` from the environment, add `@Environment(\.renderEngine) private var renderEngine` like `BottomToolbar` does.)
+Also extend the "Reset Display Calibration" button to reset `appState.transitionDuration = 0.6` and `renderEngine?.transitionDuration = 0.6`.
 
 - [ ] **Step 4: Build and run the full test suite**
 

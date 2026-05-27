@@ -40,4 +40,19 @@ enum MapProjection {
         let normalized = degrees / 360.0
         return normalized - floor(normalized)
     }
+
+    /// Advances a longitude rotation by `speedDegPerSec * dt`, wrapping into [0, 360).
+    /// Negative speed rotates the other direction.
+    static func advanceRotation(_ degrees: Double, speedDegPerSec: Double, dt: Double) -> Double {
+        let advanced = degrees + speedDegPerSec * dt
+        let wrapped = advanced.truncatingRemainder(dividingBy: 360.0)
+        return wrapped < 0 ? wrapped + 360.0 : wrapped
+    }
+
+    /// Advances a 0...1 crossfade progress by `dt / duration`, clamped at 1.0.
+    /// A non-positive duration completes instantly.
+    static func advanceTransition(_ progress: Double, dt: Double, duration: Double) -> Double {
+        guard duration > 0 else { return 1.0 }
+        return min(1.0, progress + dt / duration)
+    }
 }

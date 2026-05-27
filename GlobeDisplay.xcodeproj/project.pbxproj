@@ -42,6 +42,7 @@
 		7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7517B787A111441E6FD34CF /* GlobeOutputView.swift */; };
 		834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */; };
 		869BFE77C8E041B4387CF4E1 /* AnimationSequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */; };
+		8948F2322538BB83A3A3167F /* MotionMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F2B50A66EC94F939AD15D5 /* MotionMathTests.swift */; };
 		8EA3DF2BB12412956BC7D080 /* venus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 445ACD0C3EC97EA528027264 /* venus.jpg */; };
 		9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */; };
 		97DA0418D5CBD6A6FEFA44D7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C549AFF55AA149B3698993C7 /* mars.jpg */; };
@@ -96,6 +97,7 @@
 		20935DA0D8C0D0794D120838 /* StoryLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryLibrary.swift; sourceTree = "<group>"; };
 		26C8FD669A99D0F8DA1A2D50 /* SharedAppResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedAppResources.swift; sourceTree = "<group>"; };
 		285FEC5239387C7E49ABEE9F /* GeoEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoEvent.swift; sourceTree = "<group>"; };
+		28F2B50A66EC94F939AD15D5 /* MotionMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionMathTests.swift; sourceTree = "<group>"; };
 		2957F0ED262A745F55071427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		37447F74676C3A0E269DECF7 /* DataFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFeed.swift; sourceTree = "<group>"; };
 		3E9AD62A7D66A0067485E088 /* RenderEngineKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEngineKey.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				A3E4972F6AB5CDF7C4E7CDDC /* DataFeedModelTests.swift */,
 				C32151FCFBF3F3A98575389D /* DisplayCalibrationTests.swift */,
 				74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */,
+				28F2B50A66EC94F939AD15D5 /* MotionMathTests.swift */,
 				5B2D3769CC1909841E1C5B28 /* StaticOverlayLayerTests.swift */,
 			);
 			path = GlobeDisplayTests;
@@ -521,6 +524,7 @@
 				624528C006B4F008A02BA8BE /* DataFeedModelTests.swift in Sources */,
 				A37E523B3B17E5A1023A6904 /* DisplayCalibrationTests.swift in Sources */,
 				574C97106B4A90E2381BF451 /* MapProjectionTests.swift in Sources */,
+				8948F2322538BB83A3A3167F /* MotionMathTests.swift in Sources */,
 				010FF65360275A3B938F3824 /* StaticOverlayLayerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

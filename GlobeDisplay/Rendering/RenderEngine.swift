@@ -1,6 +1,7 @@
 import Metal
 import MetalKit
 import CoreGraphics
+import QuartzCore
 
 // Matches the Uniforms struct in EquirectangularShaders.metal exactly.
 private struct Uniforms {
@@ -36,10 +37,16 @@ final class RenderEngine: NSObject {
     let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private var pipelineState: MTLRenderPipelineState?
-    private var baseTexture: MTLTexture?
+    var baseTexture: MTLTexture?
 
     /// Longitude rotation in degrees (0–360). Updated in real time from the UI slider.
     var rotationOffset: Double = 0.0
+
+    /// Continuous spin speed in degrees/second. Sign encodes direction. 0 = off.
+    var autoRotationSpeed: Double = 0.0
+
+    /// Timestamp of the previous rendered frame, used to compute spin/transition delta-time.
+    private var lastFrameTimestamp: CFTimeInterval?
 
     /// Fisheye projection correction exponent. 1 = equidistant, 2 = equisolid.
     /// Tune this slider until latitude rings appear horizontal on the globe.
@@ -331,6 +338,15 @@ extension RenderEngine: MTKViewDelegate {
             let renderPassDescriptor = view.currentRenderPassDescriptor,
             let commandBuffer = commandQueue.makeCommandBuffer()
         else { return }
+
+        // Advance continuous spin using real elapsed time so speed is frame-rate independent.
+        let now = CACurrentMediaTime()
+        if autoRotationSpeed != 0, let last = lastFrameTimestamp {
+            rotationOffset = MapProjection.advanceRotation(
+                rotationOffset, speedDegPerSec: autoRotationSpeed, dt: now - last
+            )
+        }
+        lastFrameTimestamp = now
 
         // Configure the descriptor before creating the encoder — mutations after
         // makeRenderCommandEncoder(descriptor:) are silently ignored by Metal.

@@ -27,6 +27,8 @@ targets:
     info:
       path: GlobeDisplay/Info.plist
       properties:
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "2"
         UILaunchScreen:
           UIColorName: LaunchBackground
           UIImageName: LaunchLogo

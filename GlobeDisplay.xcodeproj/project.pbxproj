@@ -19,6 +19,7 @@
 		13687A638D11228772A43506 /* neptune.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF294168D66B30189CAC8328 /* neptune.jpg */; };
 		201F62673C5E0266FA4018EF /* StoryPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA36D9EB41B827B92DF658C0 /* StoryPlayerView.swift */; };
 		2329B29F3997D4CBCB9D8AC1 /* ContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7A75B4B4A41D2A3087B6DB /* ContentManager.swift */; };
+		26FE2A5DA982100B82AC3559 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0100EBCDEC638AC9764244A8 /* PrivacyInfo.xcprivacy */; };
 		2E775E943078163F8585605C /* saturn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07BE9C830B6C35E534C862BF /* saturn.jpg */; };
 		35C26F82C8EACB8298ADDA2F /* ControlPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE3B9D6EBC9033EF2BB8BE7 /* ControlPanelView.swift */; };
 		3BF2825E2F4B1C4161692DF0 /* jupiter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 87FBA9D90DE9E2E325DF48D6 /* jupiter.jpg */; };
@@ -92,6 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0100EBCDEC638AC9764244A8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		07BE9C830B6C35E534C862BF /* saturn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = saturn.jpg; sourceTree = "<group>"; };
 		11A1C6A40EC426DDD1239DD1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		11F0C0DED236DCE47E06B367 /* VideoFrameExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFrameExtractor.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				32BBFCA333E8767923653560 /* UI */,
 				B6D9C1DA2A7D471F7A58D16C /* Utilities */,
 				2957F0ED262A745F55071427 /* Info.plist */,
+				0100EBCDEC638AC9764244A8 /* PrivacyInfo.xcprivacy */,
 			);
 			path = GlobeDisplay;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18AD1C043D0E39F6B9A50C8 /* Assets.xcassets in Resources */,
+				26FE2A5DA982100B82AC3559 /* PrivacyInfo.xcprivacy in Resources */,
 				0C378027CF4BE25711D9A52D /* blue_marble.jpg in Resources */,
 				4F6B7525614D3D132943110C /* earth_clouds.jpg in Resources */,
 				D064405188AAE1FD34D829F9 /* earth_night.jpg in Resources */,

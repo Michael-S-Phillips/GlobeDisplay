@@ -77,6 +77,9 @@ final class RenderEngine: NSObject {
     /// Retains the active AnimationSequencer so its lifecycle is tied to the engine.
     var animationSequencer: AnimationSequencer?
 
+    /// Active real-time video playback. Mutually exclusive with animationSequencer.
+    var videoController: VideoPlaybackController?
+
     /// Overlay texture (RGBA, transparent background) composited over the base map.
     /// Set to nil to disable overlay blending.
     var overlayTexture: MTLTexture?
@@ -356,6 +359,9 @@ extension RenderEngine: MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
+        // Pull the latest decoded video frame into the base texture, if a video is active.
+        videoController?.copyCurrentFrame(to: self)
+
         guard
             let pipelineState,
             let drawable = view.currentDrawable,

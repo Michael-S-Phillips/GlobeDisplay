@@ -47,6 +47,24 @@ struct SettingsView: View {
             .accessibilityElement(children: .combine)
             .accessibilityLabel("Brightness \(Int(appState.brightness * 100)) percent")
 
+            // Crossfade transition duration
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Label("Transition", systemImage: "rectangle.2.swap")
+                    Spacer()
+                    Text(appState.transitionDuration == 0 ? "Off" : String(format: "%.1fs", appState.transitionDuration))
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                        .monospacedDigit()
+                }
+                Slider(value: $state.transitionDuration, in: 0...1.5, step: 0.1)
+                    .onChange(of: appState.transitionDuration) { _, v in
+                        renderEngine?.transitionDuration = v
+                    }
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Crossfade transition duration")
+
             // Horizontal flip
             Toggle(isOn: $state.flipHorizontal) {
                 Label("Flip Horizontal", systemImage: "arrow.left.and.right.righttriangle.left.righttriangle.right")
@@ -68,9 +86,11 @@ struct SettingsView: View {
                 appState.brightness = 1.0
                 appState.flipHorizontal = false
                 appState.flipVertical = false
+                appState.transitionDuration = 0.6
                 renderEngine?.brightness = 1.0
                 renderEngine?.flipHorizontal = false
                 renderEngine?.flipVertical = false
+                renderEngine?.transitionDuration = 0.6
             } label: {
                 Label("Reset Display Calibration", systemImage: "arrow.counterclockwise")
             }

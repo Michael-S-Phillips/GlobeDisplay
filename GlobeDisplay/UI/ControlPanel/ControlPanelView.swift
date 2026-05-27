@@ -109,12 +109,7 @@ private struct BottomToolbar: View {
             Divider()
                 .frame(height: 32)
 
-            if appState.currentContent?.contentType == .imageSequence {
-                Divider()
-                    .frame(height: 32)
-
-                animationSpeedSlider
-            }
+            PlaybackControlsView()
 
             overlayToggles
 
@@ -324,29 +319,6 @@ private struct BottomToolbar: View {
         .tint(isOn ? .blue : nil)
         .controlSize(.small)
         .accessibilityLabel("\(layer.displayName) overlay \(isOn ? "on" : "off")")
-    }
-
-    private var animationSpeedSlider: some View {
-        @Bindable var state = appState
-        return HStack {
-            Image(systemName: "play.fill")
-                .foregroundStyle(.secondary)
-                .accessibilityHidden(true)
-
-            Slider(
-                value: $state.animationPlaybackRate,
-                in: 0.25...4.0,
-                step: 0.25
-            ) {
-                Text("Speed")
-            } minimumValueLabel: {
-                Text("¼×").font(.caption2)
-            } maximumValueLabel: {
-                Text("4×").font(.caption2)
-            }
-            .accessibilityLabel("Animation speed")
-            .accessibilityValue(String(format: "%.2f×", appState.animationPlaybackRate))
-        }
     }
 
     private var rotationSlider: some View {

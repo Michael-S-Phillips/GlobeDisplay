@@ -46,6 +46,7 @@
 		869BFE77C8E041B4387CF4E1 /* AnimationSequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */; };
 		8948F2322538BB83A3A3167F /* MotionMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F2B50A66EC94F939AD15D5 /* MotionMathTests.swift */; };
 		8EA3DF2BB12412956BC7D080 /* venus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 445ACD0C3EC97EA528027264 /* venus.jpg */; };
+		8F7613AC4C261A628A622438 /* PlaybackControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744C1ABFE65CE6318C1AD11F /* PlaybackControlsView.swift */; };
 		9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */; };
 		97DA0418D5CBD6A6FEFA44D7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C549AFF55AA149B3698993C7 /* mars.jpg */; };
 		989D4237A2054BC0C4EA649A /* moon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 669BAEF92AF27CC6003950BD /* moon.jpg */; };
@@ -117,6 +118,7 @@
 		68B5E8109F795F0320DFDC53 /* earth_topo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = earth_topo.jpg; sourceTree = "<group>"; };
 		6F84B08BB1BF20886EED0838 /* GlobeDisplayTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlobeDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		72C8BAD5881D6C151863D577 /* AirQualityProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirQualityProviderTests.swift; sourceTree = "<group>"; };
+		744C1ABFE65CE6318C1AD11F /* PlaybackControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlsView.swift; sourceTree = "<group>"; };
 		74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjectionTests.swift; sourceTree = "<group>"; };
 		788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlobeDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationSequencerTests.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 			children = (
 				51DA5E06390BD51813967302 /* ContentBrowserView.swift */,
 				AEE3B9D6EBC9033EF2BB8BE7 /* ControlPanelView.swift */,
+				744C1ABFE65CE6318C1AD11F /* PlaybackControlsView.swift */,
 			);
 			path = ControlPanel;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				0669660D89121D9A6F91B59C /* OverlayCompositor.swift in Sources */,
 				5B8BA8FE0328325063066350 /* OverlayController.swift in Sources */,
 				9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */,
+				8F7613AC4C261A628A622438 /* PlaybackControlsView.swift in Sources */,
 				D85241658422813F4BA786CF /* RenderEngine.swift in Sources */,
 				55E981C48D12132CBD1D6A8A /* RenderEngineKey.swift in Sources */,
 				CC7E572A322E37890EF3F5C0 /* SettingsView.swift in Sources */,

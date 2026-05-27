@@ -41,6 +41,7 @@
 		7B4435662F787CCAB38DF650 /* uranus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5743352306B8C1005493DAF /* uranus.jpg */; };
 		7F384EDE88AA178D664F0CDA /* GlobeOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7517B787A111441E6FD34CF /* GlobeOutputView.swift */; };
 		834F7C4CEACB479BF812A78A /* DisplayCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4C2855AE2D2139DF1627B /* DisplayCalibration.swift */; };
+		869BFE77C8E041B4387CF4E1 /* AnimationSequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */; };
 		8EA3DF2BB12412956BC7D080 /* venus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 445ACD0C3EC97EA528027264 /* venus.jpg */; };
 		9753A7EEE839C56D136F5EF6 /* PlanetaryBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848C94A8EA637719B5276B3 /* PlanetaryBody.swift */; };
 		97DA0418D5CBD6A6FEFA44D7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C549AFF55AA149B3698993C7 /* mars.jpg */; };
@@ -114,6 +115,7 @@
 		72C8BAD5881D6C151863D577 /* AirQualityProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirQualityProviderTests.swift; sourceTree = "<group>"; };
 		74DFFBA656230A247BE961F7 /* MapProjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProjectionTests.swift; sourceTree = "<group>"; };
 		788D5B031AD9C9ED0775C3FB /* GlobeDisplay.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlobeDisplay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationSequencerTests.swift; sourceTree = "<group>"; };
 		7C2BEC263B67DAD983912AC0 /* StaticOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticOverlayLayer.swift; sourceTree = "<group>"; };
 		805012810FE0F9A38DC4E548 /* DataLegendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLegendView.swift; sourceTree = "<group>"; };
 		8130E7A5182E1FD2A5A94B74 /* AnimationSequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationSequencer.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 			children = (
 				6A92A10849F713963CC72538 /* TestFixtures */,
 				72C8BAD5881D6C151863D577 /* AirQualityProviderTests.swift */,
+				7BF408A12EF4170700F23D94 /* AnimationSequencerTests.swift */,
 				FD19F9A1FBD064BC07C9A7F4 /* ContentBundleTests.swift */,
 				A3E4972F6AB5CDF7C4E7CDDC /* DataFeedModelTests.swift */,
 				C32151FCFBF3F3A98575389D /* DisplayCalibrationTests.swift */,
@@ -513,6 +516,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1CB07545929B27B08CA9348 /* AirQualityProviderTests.swift in Sources */,
+				869BFE77C8E041B4387CF4E1 /* AnimationSequencerTests.swift in Sources */,
 				5A1C9DBFC5FDBF9756E60834 /* ContentBundleTests.swift in Sources */,
 				624528C006B4F008A02BA8BE /* DataFeedModelTests.swift in Sources */,
 				A37E523B3B17E5A1023A6904 /* DisplayCalibrationTests.swift in Sources */,

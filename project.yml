@@ -59,6 +59,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.globedisplay.tests
+        GENERATE_INFOPLIST_FILE: YES
         BUNDLE_LOADER: "$(TEST_HOST)"
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/GlobeDisplay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlobeDisplay"
 
@@ -73,4 +74,5 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.globedisplay.uitests
+        GENERATE_INFOPLIST_FILE: YES
         TEST_TARGET_NAME: GlobeDisplay

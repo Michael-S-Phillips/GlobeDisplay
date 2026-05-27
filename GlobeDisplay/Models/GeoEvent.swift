@@ -1,7 +1,7 @@
 import Foundation
 
 enum GeoEventType: String, Codable, CaseIterable, Sendable {
-    case earthquake, volcano, wildfire, storm, flood, seaIce, other
+    case earthquake, volcano, wildfire, storm, flood, seaIce, other, airQuality
 }
 
 /// A normalized geospatial event from any DataFeedProvider.

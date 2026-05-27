@@ -21,10 +21,15 @@ final class AppState {
     var earthquakeOverlayEnabled: Bool = false
     var volcanoOverlayEnabled: Bool = false
     var wildfireOverlayEnabled: Bool = false
+    var airQualityOverlayEnabled: Bool = false
 
     var earthquakeEvents: [GeoEvent] = []
     var volcanoEvents: [GeoEvent] = []
     var wildfireEvents: [GeoEvent] = []
+    var airQualityEvents: [GeoEvent] = []
+
+    // MARK: - Static overlays
+    var activeStaticOverlays: Set<StaticOverlayLayer> = []
 
     // MARK: - Feed status
     var feedStatus: [DataFeedType: FeedStatus] = [:]

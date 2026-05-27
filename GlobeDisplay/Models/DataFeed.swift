@@ -2,13 +2,14 @@ import Foundation
 import SwiftUI
 
 enum DataFeedType: String, Codable, CaseIterable, Sendable {
-    case earthquakes, volcanoes, wildfires
+    case earthquakes, volcanoes, wildfires, airQuality
 
     var displayName: String {
         switch self {
         case .earthquakes: "Earthquakes"
         case .volcanoes:   "Volcanoes"
         case .wildfires:   "Wildfires"
+        case .airQuality:  "Air Quality"
         }
     }
 
@@ -17,6 +18,7 @@ enum DataFeedType: String, Codable, CaseIterable, Sendable {
         case .earthquakes: "waveform.path.ecg"
         case .volcanoes:   "mountain.2.fill"
         case .wildfires:   "flame.fill"
+        case .airQuality:  "aqi.medium"
         }
     }
 
@@ -26,6 +28,7 @@ enum DataFeedType: String, Codable, CaseIterable, Sendable {
         case .earthquakes: 5 * 60    // 5 minutes
         case .volcanoes:   60 * 60   // 1 hour
         case .wildfires:   30 * 60   // 30 minutes
+        case .airQuality:  3600      // 1 hour
         }
     }
 
@@ -35,6 +38,7 @@ enum DataFeedType: String, Codable, CaseIterable, Sendable {
         case .earthquakes: .red
         case .volcanoes:   .purple
         case .wildfires:   .orange
+        case .airQuality:  .cyan
         }
     }
 
@@ -44,6 +48,7 @@ enum DataFeedType: String, Codable, CaseIterable, Sendable {
         case .earthquakes: .earthquake
         case .volcanoes:   .volcano
         case .wildfires:   .wildfire
+        case .airQuality:  .airQuality
         }
     }
 }

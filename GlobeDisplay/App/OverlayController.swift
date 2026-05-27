@@ -44,6 +44,9 @@ final class OverlayController {
             _ = appState.earthquakeOverlayEnabled
             _ = appState.volcanoOverlayEnabled
             _ = appState.wildfireOverlayEnabled
+            _ = appState.airQualityEvents
+            _ = appState.airQualityOverlayEnabled
+            _ = appState.activeStaticOverlays
         } onChange: {
             Task { @MainActor [weak self] in
                 self?.rerender()
@@ -60,11 +63,20 @@ final class OverlayController {
         let earthquakes = appState.earthquakeOverlayEnabled ? appState.earthquakeEvents : []
         let volcanoes   = appState.volcanoOverlayEnabled   ? appState.volcanoEvents   : []
         let wildfires   = appState.wildfireOverlayEnabled  ? appState.wildfireEvents  : []
+        let airQuality  = appState.airQualityOverlayEnabled ? appState.airQualityEvents : []
+
+        // Rivers static overlay
+        if appState.activeStaticOverlays.contains(.rivers) {
+            Task { await renderEngine.loadRiversTexture() }
+        } else {
+            renderEngine.unloadRiversTexture()
+        }
 
         if let image = OverlayCompositor.shared.renderOverlay(
             earthquakes: earthquakes,
             volcanoes: volcanoes,
-            wildfires: wildfires
+            wildfires: wildfires,
+            airQuality: airQuality
         ) {
             do {
                 try renderEngine.updateOverlayTexture(from: image)

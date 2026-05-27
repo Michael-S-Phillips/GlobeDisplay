@@ -131,7 +131,8 @@ private struct BottomToolbar: View {
                     DataLegendView(
                         earthquakesEnabled: appState.earthquakeOverlayEnabled,
                         volcanoesEnabled:   appState.volcanoOverlayEnabled,
-                        wildfiresEnabled:   appState.wildfireOverlayEnabled
+                        wildfiresEnabled:   appState.wildfireOverlayEnabled,
+                        airQualityEnabled:  appState.airQualityOverlayEnabled
                     )
                 }
             }
@@ -151,7 +152,8 @@ private struct BottomToolbar: View {
     private var anyOverlayEnabled: Bool {
         appState.earthquakeOverlayEnabled ||
         appState.volcanoOverlayEnabled ||
-        appState.wildfireOverlayEnabled
+        appState.wildfireOverlayEnabled ||
+        appState.airQualityOverlayEnabled
     }
 
     private var displayStatus: some View {
@@ -255,6 +257,14 @@ private struct BottomToolbar: View {
                 isOn: appState.wildfireOverlayEnabled,
                 feedType: .wildfires
             )
+            overlayButton(
+                label: "Air",
+                icon: DataFeedType.airQuality.systemImage,
+                color: .cyan,
+                isOn: appState.airQualityOverlayEnabled,
+                feedType: .airQuality
+            )
+            staticOverlayButton(layer: .rivers)
         }
     }
 
@@ -270,9 +280,10 @@ private struct BottomToolbar: View {
             Button {
                 let newValue = !isOn
                 switch feedType {
-                case .earthquakes: appState.earthquakeOverlayEnabled = newValue
-                case .volcanoes:   appState.volcanoOverlayEnabled    = newValue
-                case .wildfires:   appState.wildfireOverlayEnabled   = newValue
+                case .earthquakes: appState.earthquakeOverlayEnabled  = newValue
+                case .volcanoes:   appState.volcanoOverlayEnabled     = newValue
+                case .wildfires:   appState.wildfireOverlayEnabled    = newValue
+                case .airQuality:  appState.airQualityOverlayEnabled  = newValue
                 }
                 if newValue {
                     DataFeedService.shared.startFeed(feedType, appState: appState)
@@ -295,6 +306,24 @@ private struct BottomToolbar: View {
                     .lineLimit(1)
             }
         }
+    }
+
+    private func staticOverlayButton(layer: StaticOverlayLayer) -> some View {
+        let isOn = appState.activeStaticOverlays.contains(layer)
+        return Button {
+            if isOn {
+                appState.activeStaticOverlays.remove(layer)
+            } else {
+                appState.activeStaticOverlays.insert(layer)
+            }
+        } label: {
+            Label(layer.displayName, systemImage: layer.systemImage)
+                .font(.caption)
+        }
+        .buttonStyle(.bordered)
+        .tint(isOn ? .blue : nil)
+        .controlSize(.small)
+        .accessibilityLabel("\(layer.displayName) overlay \(isOn ? "on" : "off")")
     }
 
     private var animationSpeedSlider: some View {

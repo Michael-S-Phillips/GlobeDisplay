@@ -6,6 +6,7 @@ struct DataLegendView: View {
     let earthquakesEnabled: Bool
     let volcanoesEnabled:   Bool
     let wildfiresEnabled:   Bool
+    let airQualityEnabled:  Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -36,6 +37,9 @@ struct DataLegendView: View {
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                         .padding(.top, 2)
+                    Text("Outer ring = shallow (<70 km). Faded = deep (>300 km).")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -60,6 +64,30 @@ struct DataLegendView: View {
                     } label: {
                         Text("Active wildfire (GDACS)")
                     }
+                }
+            }
+
+            if airQualityEnabled {
+                section("Air Quality (US AQI)") {
+                    legendRow {
+                        Circle().fill(Color(red: 0.0, green: 0.8, blue: 0.2)).frame(width: 12, height: 12)
+                    } label: { Text("0–50 Good") }
+                    legendRow {
+                        Circle().fill(Color(red: 1.0, green: 0.9, blue: 0.0)).frame(width: 12, height: 12)
+                    } label: { Text("51–100 Moderate") }
+                    legendRow {
+                        Circle().fill(Color(red: 1.0, green: 0.5, blue: 0.0)).frame(width: 12, height: 12)
+                    } label: { Text("101–150 Sensitive groups") }
+                    legendRow {
+                        Circle().fill(Color(red: 1.0, green: 0.1, blue: 0.1)).frame(width: 12, height: 12)
+                    } label: { Text("151–200 Unhealthy") }
+                    legendRow {
+                        Circle().fill(Color(red: 0.6, green: 0.0, blue: 0.0)).frame(width: 12, height: 12)
+                    } label: { Text("201+ Very Unhealthy / Hazardous") }
+                    Text("Source: Open-Meteo")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 2)
                 }
             }
         }

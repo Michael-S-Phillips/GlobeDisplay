@@ -25,11 +25,33 @@ This document lists what is already done in the codebase and the steps only you 
 
 ---
 
+## ⚠️ Known blocker found during prep (must fix first)
+
+A **signed archive builds successfully** (`build/GlobeDisplay.xcarchive`, development-signed), but
+App Store **export/upload is blocked by account permissions**. Attempting the export produced:
+
+```
+Team "Michael Phillips" does not have permission to create "iOS App Store" provisioning profiles.
+"No provider associated with App Store Connect user"
+No profiles for 'com.globedisplay.app' were found
+```
+
+The Apple ID currently in Xcode (`lpl-sic@arizona.edu`, team `K7M2M2864C`) has only an
+**Apple Development** certificate and is **not associated with an App Store Connect provider**,
+so it cannot create the **Apple Distribution** certificate or App Store provisioning profile.
+
+**To unblock (Account Holder / Admin in App Store Connect):**
+- [ ] Confirm the Apple Developer Program enrollment is active and paid for team `K7M2M2864C`.
+- [ ] Grant this Apple ID an **Admin** or **App Manager** role with program access,
+      or sign in with an account that has it.
+- [ ] In Xcode → Settings → Accounts → Manage Certificates, create an **Apple Distribution** certificate.
+- [ ] Re-run the archive/export commands below (they will then succeed).
+
 ## Prerequisites (you)
 
 - [ ] Active paid Apple Developer Program membership for team `K7M2M2864C`.
-- [ ] Signed into that Apple ID in Xcode → Settings → Accounts.
-- [ ] App Store Connect access.
+- [ ] Signed into an Apple ID in Xcode → Settings → Accounts **with distribution permission** (see blocker above).
+- [ ] App Store Connect access (provider association).
 
 ## App Store Connect setup (you)
 

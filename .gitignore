@@ -29,3 +29,6 @@ Pods/
 # Environment
 *.env
 .worktrees/
+
+build/
+ExportOptions.plist

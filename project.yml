@@ -51,6 +51,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.globedisplay.app
         CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: K7M2M2864C
         TARGETED_DEVICE_FAMILY: "2"
 
   GlobeDisplayTests:

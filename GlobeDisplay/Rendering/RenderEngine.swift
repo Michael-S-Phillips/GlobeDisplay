@@ -12,6 +12,7 @@ private struct Uniforms {
     var brightness: Float       // output multiplier, default 1.0
     var flipHorizontal: Float   // 1.0 = mirror east/west
     var flipVertical: Float     // 1.0 = flip north/south
+    var transitionProgress: Float // 0 = previous base, 1 = new base
 }
 
 enum RenderEngineError: Error {
@@ -47,6 +48,15 @@ final class RenderEngine: NSObject {
 
     /// Timestamp of the previous rendered frame, used to compute spin/transition delta-time.
     private var lastFrameTimestamp: CFTimeInterval?
+
+    /// Outgoing base texture retained during a crossfade. nil when not transitioning.
+    private var prevBaseTexture: MTLTexture?
+
+    /// Crossfade progress 0→1. 1.0 means the transition is complete (show new base only).
+    private var transitionProgress: Double = 1.0
+
+    /// Crossfade duration in seconds when switching base maps. 0 = instant swap.
+    var transitionDuration: Double = 0.6
 
     /// Fisheye projection correction exponent. 1 = equidistant, 2 = equisolid.
     /// Tune this slider until latitude rings appear horizontal on the globe.
@@ -150,7 +160,21 @@ final class RenderEngine: NSObject {
             .textureStorageMode: MTLStorageMode.private.rawValue,
             .SRGB: false
         ]
-        baseTexture = try await loader.newTexture(cgImage: image, options: options)
+        let texture = try await loader.newTexture(cgImage: image, options: options)
+        setBaseTexture(texture, animated: true)
+    }
+
+    /// Swaps the base texture, optionally crossfading from the outgoing one.
+    /// Animation/video frame updates assign `baseTexture` directly to bypass the fade.
+    func setBaseTexture(_ texture: MTLTexture?, animated: Bool) {
+        if animated, transitionDuration > 0, let current = baseTexture {
+            prevBaseTexture = current
+            transitionProgress = 0.0
+        } else {
+            prevBaseTexture = nil
+            transitionProgress = 1.0
+        }
+        baseTexture = texture
     }
 
     // MARK: - Animation Frame Update
@@ -346,6 +370,12 @@ extension RenderEngine: MTKViewDelegate {
                 rotationOffset, speedDegPerSec: autoRotationSpeed, dt: now - last
             )
         }
+        if transitionProgress < 1.0, let last = lastFrameTimestamp {
+            transitionProgress = MapProjection.advanceTransition(
+                transitionProgress, dt: now - last, duration: transitionDuration
+            )
+            if transitionProgress >= 1.0 { prevBaseTexture = nil }
+        }
         lastFrameTimestamp = now
 
         // Configure the descriptor before creating the encoder — mutations after
@@ -363,6 +393,7 @@ extension RenderEngine: MTKViewDelegate {
             // Use the live overlay texture, or fall back to the 1×1 clear placeholder.
             encoder.setFragmentTexture(overlayTexture ?? clearOverlayTexture, index: 1)
             encoder.setFragmentTexture(riversTexture ?? clearOverlayTexture, index: 2)
+            encoder.setFragmentTexture(prevBaseTexture ?? clearOverlayTexture, index: 3)
             let aspect = Float(view.drawableSize.height / view.drawableSize.width)
             var uniforms = Uniforms(
                 rotationOffset: Float(MapProjection.normalizedRotation(rotationOffset)),
@@ -371,7 +402,8 @@ extension RenderEngine: MTKViewDelegate {
                 projectionRadius: Float(projectionRadius),
                 brightness: Float(brightness),
                 flipHorizontal: flipHorizontal ? 1.0 : 0.0,
-                flipVertical: flipVertical ? 1.0 : 0.0
+                flipVertical: flipVertical ? 1.0 : 0.0,
+                transitionProgress: Float(transitionProgress)
             )
             encoder.setFragmentBytes(&uniforms, length: MemoryLayout<Uniforms>.size, index: 0)
             encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)

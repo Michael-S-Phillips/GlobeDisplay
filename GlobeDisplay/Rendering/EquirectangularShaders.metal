@@ -10,6 +10,7 @@ struct Uniforms {
     float brightness;          // output brightness multiplier (default 1.0)
     float flipHorizontal;      // 1.0 = mirror east/west (reverse longitude direction)
     float flipVertical;        // 1.0 = flip north/south (invert co-latitude)
+    float transitionProgress;  // 0 = show previous base, 1 = show new base (crossfade)
 };
 
 struct VertexOut {
@@ -42,9 +43,10 @@ vertex VertexOut equirect_vertex(uint vertexID [[vertex_id]]) {
 
 fragment float4 equirect_fragment(
     VertexOut in [[stage_in]],
-    texture2d<float> baseTexture    [[texture(0)]],
-    texture2d<float> overlayTexture [[texture(1)]],
-    texture2d<float> riversTexture  [[texture(2)]],
+    texture2d<float> baseTexture     [[texture(0)]],
+    texture2d<float> overlayTexture  [[texture(1)]],
+    texture2d<float> riversTexture   [[texture(2)]],
+    texture2d<float> prevBaseTexture [[texture(3)]],
     constant Uniforms& uniforms [[buffer(0)]]
 ) {
     // The MagicPlanet uses polar azimuthal equidistant projection:
@@ -98,6 +100,9 @@ fragment float4 equirect_fragment(
 
     float2 uv = float2(lon, lat);
     float4 base    = baseTexture.sample(polarSampler, uv);
+    // Crossfade from the previous base map to the new one on dataset switch.
+    float4 prevBase = prevBaseTexture.sample(polarSampler, uv);
+    base = mix(prevBase, base, uniforms.transitionProgress);
     float4 rivers  = riversTexture.sample(polarSampler, uv);
     float4 overlay = overlayTexture.sample(overlaySampler, uv);
 
